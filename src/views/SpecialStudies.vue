@@ -8,7 +8,21 @@
       <h1 class="page-title">Special Studies</h1>
       <patient-details-view v-model:patientDetails="patientDetails" />
       <lab-details-view v-model:labDetails="labDetails" />
-      <clinical-details-view v-model:clinicalDetails="clinicalDetails" :isFemale="patientDetails.gender === 'female'" />
+      <clinical-details-view
+        v-model:clinicalDetails="clinicalDetails"
+        :isFemale="patientDetails.gender === 'female'"
+      />
+      <div class="previous-investigations-container">
+        <div class="details-section-label">Previous Hematological Investigations</div>
+        <div v-for="(investigation, index) in previousInvestigations" :key="index">
+          <previous-investigations-view
+            :investigation="investigation"
+            @update:investigation="updateInvestigation(index, $event)"
+            @remove="removeInvestigation(index)"
+          />
+        </div>
+        <button class="add-btn" @click="addInvestigation">Add Investigation</button>
+      </div>
       <coulter-view v-model:coulterData="coulterData" />
       <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
     </div>
@@ -32,6 +46,8 @@ import PatientDetailsView from '../components/subviews/PatientDetails.vue'
 
 import ClinicalDetailsView from '../components/subviews/ClinicalDetails.vue'
 
+import PreviousInvestigationsView from '../components/subviews/PreviousInvestigations.vue'
+
 export default {
   name: 'SpecialStudies',
   components: {
@@ -43,6 +59,7 @@ export default {
     ContentSaveAllIcon,
     PatientDetailsView,
     ClinicalDetailsView,
+    PreviousInvestigationsView,
   },
   data() {
     return {
@@ -87,6 +104,7 @@ export default {
         hepatomegaly: false,
         splenomegaly: false,
       },
+      previousInvestigations: [],
       peripheralSmearData: {
         rbc: {},
         wbc: {},
@@ -137,6 +155,33 @@ export default {
       // Implement save case functionality here
       console.log('Save Case button clicked')
     },
+    addInvestigation() {
+      this.previousInvestigations.push({
+        date: new Date().toISOString().slice(0, 10),
+        hb: '',
+        tlc: '',
+        plt: '',
+        rbc: '',
+        mcv: '',
+        mch: '',
+        mchc: '',
+        urea: '',
+        creat: '',
+        na: '',
+        k: '',
+        sgot: '',
+        sgpt: '',
+        alp: '',
+        dBil: '',
+        tBil: '',
+      })
+    },
+    removeInvestigation(index: number) {
+      this.previousInvestigations.splice(index, 1)
+    },
+    updateInvestigation(index: number, investigation: any) {
+      this.previousInvestigations[index] = investigation
+    },
   },
 }
 </script>
@@ -178,5 +223,44 @@ export default {
 
 .fab:hover {
   background-color: var(--accent-hover);
+}
+
+.add-btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.add-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.previous-investigations-container {
+  position: relative;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 1.5rem 1rem 1rem 1rem;
+  margin-bottom: 2rem;
+  background-color: var(--bg-dark);
+}
+
+.details-section-box {
+  margin-bottom: 2rem;
+}
+
+.details-section-label {
+  position: absolute;
+  top: -0.75rem;
+  left: 1rem;
+  background-color: var(--bg-dark);
+  color: var(--accent2);
+  padding: 0 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 </style>
