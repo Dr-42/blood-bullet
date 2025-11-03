@@ -10,6 +10,7 @@
           :style="{
             background: `linear-gradient(to right, ${palette.bg}, ${palette.bgDark})`,
             border: palette.selected ? `2px solid ${palette.accent2}` : 'none',
+            color: palette.selected ? palette.accent2 : 'inherit',
           }"
           @click="selectPalette(index)"
         >
@@ -19,7 +20,7 @@
               background: `linear-gradient(to right, ${palette.accent}, ${palette.accentHover})`,
             }"
           ></div>
-          <span>{{ palette.name }}</span>
+          <span class="pallete-name">{{ palette.name }}</span>
         </div>
       </div>
 
@@ -195,16 +196,16 @@ export default defineComponent({
   z-index: 20;
 }
 
---selectedBg: var(v-bind(selectedBg), --bg);
---selectedBgDark: var(v-bind(selectedBgDark), --bg-dark);
---selectedAccent: var(v-bind(selectedAccent), --accent);
---selectedAccentHover: var(v-bind(selectedAccentHover), --accent-hover);
---selectedAccent2: var(v-bind(selectedAccent2), --accent2);
---selectedDisabledColor: var(v-bind(selectedDisabledColor), --disabled-color);
-
 .modal {
+  --selectedBg: v-bind(selectedBg);
+  --selectedBgDark: v-bind(selectedBgDark);
+  --selectedAccent: v-bind(selectedAccent);
+  --selectedAccentHover: v-bind(selectedAccentHover);
+  --selectedAccent2: v-bind(selectedAccent2);
+  --selectedDisabledColor: v-bind(selectedDisabledColor);
+
   color: #e2e2e2;
-  background-color: var(--selectedBg, --bg);
+  background-color: var(--selectedBg, var(--bg));
   padding: 20px;
   border-radius: 8px;
   width: 90%;
@@ -218,6 +219,7 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr 1fr;
   gap: 15px;
   margin-bottom: 15px;
+  color: var(--selectedAccent, var(--accent));
 }
 
 .palette-option {
@@ -227,6 +229,7 @@ export default defineComponent({
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
+  color: var(--selectedAccent2, var(--accent2));
   transition: transform 0.2s ease;
 }
 
@@ -239,7 +242,7 @@ export default defineComponent({
   height: 50px;
   border-radius: 50%;
   margin-bottom: 10px;
-  border: 1px solid var(--selectedAccent2, --accent2);
+  border: 1px solid var(--selectedAccent2, var(--accent2));
 }
 
 .modal-actions {
@@ -249,7 +252,7 @@ export default defineComponent({
 }
 
 .cancel-btn {
-  background-color: var(--selectedAccent2, --accent2);
+  background-color: var(--selectedAccent2, var(--accent2));
   color: white;
   border: none;
   padding: 10px 15px;
@@ -258,7 +261,7 @@ export default defineComponent({
 }
 
 .submit-btn {
-  background-color: var(--selectedAccent, --accent);
+  background-color: var(--selectedAccent, var(--accent));
   color: white;
   border: none;
   padding: 10px 15px;
@@ -267,15 +270,15 @@ export default defineComponent({
 }
 
 .cancel-btn:hover {
-  background-color: var(--selectedAccentHover, --accentHover);
+  background-color: var(--selectedAccentHover, var(--accent-hover));
 }
 
 .submit-btn:hover {
-  background-color: var(--selectedAccentHover, --accentHover);
+  background-color: var(--selectedAccentHover, var(--accent-hover));
 }
 
 .submit-btn:disabled {
-  background-color: var(--disabled-color);
+  background-color: var(--selectedDisabledColor, var(--disabled-color));
   cursor: not-allowed;
 }
 </style>

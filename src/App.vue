@@ -128,6 +128,7 @@ export default {
       root.setProperty('--accent-hover', paletteData.palette.accentHover)
       this.activePaletteIdx = paletteData.idx
       localStorage.setItem('activePaletteIdx', paletteData.idx.toString())
+      localStorage.setItem('palette_' + paletteData.idx, JSON.stringify(paletteData.toJson()))
       this.currentModal = null
     },
 
