@@ -139,4 +139,3 @@ export default {
   background-color: var(--accent-hover);
 }
 </style>
-

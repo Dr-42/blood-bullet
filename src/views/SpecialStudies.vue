@@ -8,6 +8,7 @@
       <h1 class="page-title">Special Studies</h1>
       <patient-details-view v-model:patientDetails="patientDetails" />
       <lab-details-view v-model:labDetails="labDetails" />
+      <clinical-details-view v-model:clinicalDetails="clinicalDetails" :isFemale="patientDetails.gender === 'female'" />
       <coulter-view v-model:coulterData="coulterData" />
       <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
     </div>
@@ -29,6 +30,8 @@ import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
 import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
 import PatientDetailsView from '../components/subviews/PatientDetails.vue'
 
+import ClinicalDetailsView from '../components/subviews/ClinicalDetails.vue'
+
 export default {
   name: 'SpecialStudies',
   components: {
@@ -39,6 +42,7 @@ export default {
     LoadingSpinner,
     ContentSaveAllIcon,
     PatientDetailsView,
+    ClinicalDetailsView,
   },
   data() {
     return {
@@ -56,6 +60,32 @@ export default {
       labDetails: {
         caseId: '12345',
         date: new Date().toISOString().slice(0, 10),
+      },
+      clinicalDetails: {
+        chiefComplaint: '',
+        pica: '',
+        bloodTransfusion: '',
+        menstrualHistory: '',
+        pastHistory: '',
+        diet: 'Non-vegetarian',
+        sleep: '',
+        appetite: '',
+        bladder: '',
+        bowel: '',
+        drugUse: '',
+        others: '',
+        bleeding: '',
+        hematinics: '',
+        obstetricHistory: '',
+        familyHistory: '',
+        pallor: false,
+        icterus: false,
+        clubbing: false,
+        cyanosis: false,
+        lymphadenopathy: false,
+        edema: false,
+        hepatomegaly: false,
+        splenomegaly: false,
       },
       peripheralSmearData: {
         rbc: {},

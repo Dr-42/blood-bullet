@@ -3,34 +3,24 @@
     <div class="modal">
       <h2>Settings</h2>
       <form @submit.prevent="submit">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            v-model="username"
-            required
-            placeholder="Enter username"
-          />
-        </div>
+
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="geminiApiKey">Gemini API Key</label>
           <div class="password-container">
             <input
-              :type="showPassword ? 'text' : 'password'"
-              id="password"
-              v-model="password"
-              required
-              placeholder="Enter password"
+              :type="showApiKey ? 'text' : 'password'"
+              id="geminiApiKey"
+              v-model="geminiApiKey"
+              placeholder="Enter your Gemini API Key"
             />
             <button
               type="button"
               class="toggle-password"
-              @click="togglePasswordVisibility"
-              aria-label="Toggle password visibility"
+              @click="toggleApiKeyVisibility"
+              aria-label="Toggle API key visibility"
             >
-              <span v-if="showPassword">
+              <span v-if="showApiKey">
                 <eye-off-icon class="eye-icon" />
               </span>
               <span v-else>
@@ -38,16 +28,6 @@
               </span>
             </button>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="geminiApiKey">Gemini API Key</label>
-          <input
-            type="password"
-            id="geminiApiKey"
-            v-model="geminiApiKey"
-            placeholder="Enter your Gemini API Key"
-          />
           <small>Get your free API key from Google AI Studio. Do not share this key.</small>
         </div>
 
@@ -73,16 +53,14 @@ export default defineComponent({
   },
   data() {
     return {
-      username: '',
-      password: '',
-      showPassword: false,
+      showApiKey: false,
       geminiApiKey: '',
     }
   },
   emits: ['close', 'savesettings'],
   computed: {
     isFormValid(): boolean {
-      return this.username.trim().length > 0 && this.password.trim().length > 0
+      return this.geminiApiKey.trim().length > 0
     },
   },
   methods: {
@@ -91,8 +69,6 @@ export default defineComponent({
     },
     submit() {
       this.$emit('savesettings', {
-        username: this.username,
-        password: this.password,
         geminiApiKey: this.geminiApiKey,
       })
     },
@@ -100,8 +76,8 @@ export default defineComponent({
       const target = event.target as HTMLElement
       target.scrollIntoView({ behavior: 'smooth', block: 'center' })
     },
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword
+    toggleApiKeyVisibility() {
+      this.showApiKey = !this.showApiKey
     },
   },
   mounted() {
@@ -202,11 +178,7 @@ input {
   align-items: center;
 }
 
-input[type='password'],
-input[type='text'] {
-  flex: 1;
-  padding-right: 40px; /* Space for the eye icon */
-}
+
 
 .toggle-password {
   position: absolute;
