@@ -28,7 +28,12 @@
     <hr class="separator" />
 
     <div class="dlc-grid">
-      <div v-for="cell in wbcTypes" :key="cell.name" class="dlc-cell" @click="handleCellClick(cell.name)">
+      <div
+        v-for="cell in wbcTypes"
+        :key="cell.name"
+        class="dlc-cell"
+        @click="handleCellClick(cell.name)"
+      >
         <div class="cell-icon" :style="getIconStyle(cell.atlas_key)"></div>
         <div class="cell-name">{{ cell.name }}</div>
         <div class="cell-count">{{ dlcData[cell.name] || 0 }}</div>
@@ -45,12 +50,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import atlasData from '../../../public/images/at_guide.json'
-import bloodCellsImg from '/images/blood_cells.png'
-
-interface CellType {
-  name: string
-  atlas_key: string
-}
+import type { CellType } from '../../types'
 
 export default defineComponent({
   name: 'DlcCounter',
@@ -77,8 +77,8 @@ export default defineComponent({
     return {
       targetCount: 100,
       isDecreaseMode: false,
-      nRbcType: cellTypes.find(c => c.name === 'nRBC')!,
-      wbcTypes: cellTypes.filter(c => c.name !== 'nRBC'),
+      nRbcType: cellTypes.find((c) => c.name === 'nRBC')!,
+      wbcTypes: cellTypes.filter((c) => c.name !== 'nRBC'),
       atlas: atlasData,
     }
   },
@@ -119,8 +119,8 @@ export default defineComponent({
   },
   methods: {
     resetCounts() {
-      const resetData = Object.fromEntries(Object.keys(this.dlcData).map(key => [key, 0]));
-      this.$emit('update:dlcData', resetData);
+      const resetData = Object.fromEntries(Object.keys(this.dlcData).map((key) => [key, 0]))
+      this.$emit('update:dlcData', resetData)
     },
     handleCellClick(cell: string) {
       const currentCount = this.dlcData[cell] || 0
@@ -143,7 +143,7 @@ export default defineComponent({
       if (!frame) return {}
       const scale = 80 / frame.width // 80 is the cell-icon width/height
       return {
-        backgroundImage: `url(${bloodCellsImg})`,
+        backgroundImage: 'url(images/blood_cells.png)',
         backgroundPosition: `-${frame.x * scale}px -${frame.y * scale}px`,
         backgroundSize: `${this.atlas.image_width * scale}px ${this.atlas.image_height * scale}px`,
       }
@@ -276,7 +276,9 @@ export default defineComponent({
   padding: 1rem;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
   border: 1px solid var(--bg-dark);
   display: flex;
   flex-direction: column;
@@ -335,7 +337,7 @@ export default defineComponent({
   height: 28px;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -349,18 +351,18 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   background-color: var(--accent);
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 20px;
   width: 20px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -371,6 +373,10 @@ input:checked + .slider:before {
   transform: translateX(22px);
 }
 
-.slider.round { border-radius: 28px; }
-.slider.round:before { border-radius: 50%; }
+.slider.round {
+  border-radius: 28px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>

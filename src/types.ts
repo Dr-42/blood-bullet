@@ -82,3 +82,8 @@ export class PaletteData {
     }
   }
 }
+
+export interface CellType {
+  name: string
+  atlas_key: string
+}

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default" data-mode="light">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Blood Bullet</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="app-container">
+			<aside class="sidebar">
+				<div class="app-title">Blood Bullet</div>
+				<nav class="main-nav">
+					<ul>
+						<li><a href="#" class="nav-item" data-page="routine-slide"><img src="public/icons/slide.svg" class="nav-icon">Routine Slide</a></li>
+						<li><a href="#" class="nav-item" data-page="special-studies"><img src="public/icons/dna.svg" class="nav-icon">Special Studies</a></li>
+						<li><a href="#" class="nav-item" data-page="bone-marrow"><img src="public/icons/bone.svg" class="nav-icon">Bone Marrow studies</a></li>
+						<li><a href="#" class="nav-item" data-page="dlc"><img src="public/icons/gift.svg" class="nav-icon">Free DLC</a></li>
+						<li><a href="#" class="nav-item" data-page="tools"><img src="public/icons/wrench.svg" class="nav-icon">Tools</a></li>
+					</ul>
+				</nav>
+				<div class="bottom-nav">
+					<ul>
+						<li><a href="#" class="nav-item" id="license-btn"><img src="public/icons/file-text.svg" class="nav-icon">LICENSE</a></li>
+						<li><a href="#" class="nav-item" id="settings-btn"><img src="public/icons/settings.svg" class="nav-icon">Settings</a></li>
+					</ul>
+				</div>
+			</aside>
+			<main class="content">
+				<div id="welcome-page" class="page active">
+					<h1>Welcome to Blood Bullet!</h1>
+					<p>Select an option from the sidebar to get started.</p>
+				</div>
+				<div id="routine-slide-page" class="page">
+					<div class="page-header">
+						<h1>Routine Slide</h1>
+						<button id="view-cases-btn" class="button-primary">Previous Cases</button>
+					</div>
+					<form id="routine-slide-form">
+						<fieldset>
+							<legend>Case Details</legend>
+							<div class="form-grid">
+								<div class="form-group">
+									<label for="sample_id">Sample ID</label>
+									<input type="text" id="sample_id" name="sample_id">
+								</div>
+								<div class="form-group">
+									<label for="date">Date</label>
+									<input type="date" id="date" name="date" placeholder="dd-mm-yyyy">
+								</div>
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<legend>Coulter Parameters</legend>
+							<div class="form-grid-4-col">
+								<div class="form-group"><label for="WBC">WBC</label><input type="number" step="0.01" id="WBC" name="WBC"></div>
+								<div class="form-group"><label for="Neu%">Neu%</label><input type="number" step="0.01" id="Neu%" name="Neu%"></div>
+								<div class="form-group"><label for="Lym%">Lym%</label><input type="number" step="0.01" id="Lym%" name="Lym%"></div>
+								<div class="form-group"><label for="Mon%">Mon%</label><input type="number" step="0.01" id="Mon%" name="Mon%"></div>
+								<div class="form-group"><label for="Eos%">Eos%</label><input type="number" step="0.01" id="Eos%" name="Eos%"></div>
+								<div class="form-group"><label for="Bas%">Bas%</label><input type="number" step="0.01" id="Bas%" name="Bas%"></div>
+								<div class="form-group"><label for="RBC">RBC</label><input type="number" step="0.01" id="RBC" name="RBC"></div>
+								<div class="form-group"><label for="HGB">HGB</label><input type="number" step="0.01" id="HGB" name="HGB"></div>
+								<div class="form-group"><label for="HCT">HCT</label><input type="number" step="0.01" id="HCT" name="HCT"></div>
+								<div class="form-group"><label for="MCV">MCV</label><input type="number" step="0.01" id="MCV" name="MCV"></div>
+								<div class="form-group"><label for="MCH">MCH</label><input type="number" step="0.01" id="MCH" name="MCH"></div>
+								<div class="form-group"><label for="MCHC">MCHC</label><input type="number" step="0.01" id="MCHC" name="MCHC"></div>
+								<div class="form-group"><label for="RDW-CV">RDW-CV</label><input type="number" step="0.01" id="RDW-CV" name="RDW-CV"></div>
+								<div class="form-group"><label for="PLT">PLT</label><input type="number" step="0.01" id="PLT" name="PLT"></div>
+								<div class="form-group"><label for="MPV">MPV</label><input type="number" step="0.01" id="MPV" name="MPV"></div>
+								<div class="form-group"><label for="PDW">PDW</label><input type="number" step="0.01" id="PDW" name="PDW"></div>
+								<div class="form-group"><label for="PCT">PCT</label><input type="number" step="0.01" id="PCT" name="PCT"></div>
+								<div class="form-group"><label for="P-LCC">P-LCC</label><input type="number" step="0.01" id="P-LCC" name="P-LCC"></div>
+								<div class="form-group"><label for="P-LCR">P-LCR</label><input type="number" step="0.01" id="P-LCR" name="P-LCR"></div>
+								<div class="form-group"><label for="RET%">RET%</label><input type="number" step="0.01" id="RET%" name="RET%"></div>
+								<div class="form-group"><label for="IRF">IRF</label><input type="number" step="0.01" id="IRF" name="IRF"></div>
+								<div class="form-group"><label for="LFR">LFR</label><input type="number" step="0.01" id="LFR" name="LFR"></div>
+								<div class="form-group"><label for="MFR">MFR</label><input type="number" step="0.01" id="MFR" name="MFR"></div>
+								<div class="form-group"><label for="HFR">HFR</label><input type="number" step="0.01" id="HFR" name="HFR"></div>
+								<div class="form-group"><label for="IMG%">IMG%</label><input type="number" step="0.01" id="IMG%" name="IMG%"></div>
+								<div class="form-group"><label for="IPF%">IPF%</label><input type="number" step="0.01" id="IPF%" name="IPF%"></div>
+								<div class="form-group"><label for="RHE">RHE</label><input type="number" step="0.01" id="RHE" name="RHE"></div>
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<legend>Peripheral Smear</legend>
+							<div class="form-group">
+								<label for="rbc_morphology">RBC Morphology</label>
+								<textarea id="rbc_morphology" name="rbc_morphology" rows="4"></textarea>
+							</div>
+
+							<fieldset>
+								<legend>WBC Morphology</legend>
+								<div class="form-group">
+									<label for="wbc_comments">Comments</label>
+									<textarea id="wbc_comments" name="wbc_comments" rows="2"></textarea>
+								</div>
+								<fieldset>
+									<legend>Differential Leukocyte Count</legend>
+									<div class="dlc-controls">
+										<div class="form-group">
+											<label for="dlc-target">Target Count</label>
+											<input type="number" id="dlc-target" value="100">
+										</div>
+										<div class="toggle-switch-container">
+											<label class="switch">
+												<input type="checkbox" id="dlc-mode-toggle">
+												<span class="slider round"></span>
+											</label>
+											<span id="dlc-mode-label">Mode: Increase</span>
+										</div>
+										<div id="dlc-total-display">Total: 0 / 100</div>
+									</div>
+									<div id="dlc-cell-grid" class="dlc-grid">
+										<div class="dlc-cell nrbc-cell-container">
+											<button type="button" class="dlc-cell-button" id="nrbc-btn" data-cell="nrbc"><div class="cell-icon icon-erythroid"></div></button>
+											<span class="cell-name">nRBCs</span>
+											<span id="nrbc-count" class="cell-count" data-cell-count="nrbc">0</span>
+											<input type="hidden" name="nrbc_count" id="nrbc-count-hidden" value="0">
+										</div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="neutrophil"><div class="cell-icon icon-neutrophil"></div></button><span class="cell-name">Neutrophil</span><span class="cell-count" data-cell-count="neutrophil">0</span><input type="hidden" name="neutrophils" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="lymphocyte"><div class="cell-icon icon-lymphocyte"></div></button><span class="cell-name">Lymphocyte</span><span class="cell-count" data-cell-count="lymphocyte">0</span><input type="hidden" name="lymphocytes" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="monocyte"><div class="cell-icon icon-monocyte"></div></button><span class="cell-name">Monocyte</span><span class="cell-count" data-cell-count="monocyte">0</span><input type="hidden" name="monocytes" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="eosinophil"><div class="cell-icon icon-eosinophil"></div></button><span class="cell-name">Eosinophil</span><span class="cell-count" data-cell-count="eosinophil">0</span><input type="hidden" name="eosinophils" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="basophil"><div class="cell-icon icon-basophil"></div></button><span class="cell-name">Basophil</span><span class="cell-count" data-cell-count="basophil">0</span><input type="hidden" name="basophils" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="band"><div class="cell-icon icon-band"></div></button><span class="cell-name">Band Form</span><span class="cell-count" data-cell-count="band">0</span><input type="hidden" name="band_forms" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="metamyelocyte"><div class="cell-icon icon-metamyelocyte"></div></button><span class="cell-name">Metamyelocyte</span><span class="cell-count" data-cell-count="metamyelocyte">0</span><input type="hidden" name="meta_myelocytes" value="0"></div>
+										<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="atypical"><div class="cell-icon icon-atypical">A</div></button><span class="cell-name">Atypical</span><span class="cell-count" data-cell-count="atypical">0</span><input type="hidden" name="atypical_cells" value="0"></div>
+									</div>
+									<div id="dlc-summary" class="summary-display"></div>
+								</fieldset>
+								<div class="form-group">
+									<label for="additional_notes">Additional Notes</label>
+									<textarea id="additional_notes" name="additional_notes" rows="3"></textarea>
+								</div>
+							</fieldset>
+
+							<div class="form-group">
+								<label for="platelet_morphology">Platelet Morphology</label>
+								<textarea id="platelet_morphology" name="platelet_morphology" rows="2"></textarea>
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<legend>Conclusion</legend>
+							<div class="form-group">
+								<label for="impression">Impression</label>
+								<textarea id="impression" name="impression" rows="3"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="advice">Advice</label>
+								<textarea id="advice" name="advice" rows="3"></textarea>
+							</div>
+						</fieldset>
+
+						<button type="submit" class="button-success">Save Case</button>
+					</form>
+				</div>
+				<div id="special-studies-page" class="page">
+					<div class="page-header">
+						<h1>Special Studies</h1>
+					</div>
+					<form id="special-studies-form">
+						<!-- I. Patient details -->
+						<fieldset>
+							<legend>I. Patient Details</legend>
+							<div class="form-grid">
+								<div class="form-group"><label for="ss-name">Name</label><input type="text" id="ss-name" name="ss-name"></div>
+								<div class="form-group"><label for="ss-age">Age</label><input type="number" id="ss-age" name="ss-age"></div>
+								<div class="form-group">
+									<label for="ss-gender">Gender</label>
+									<select id="ss-gender" name="ss-gender"><option value="M">M</option><option value="F">F</option></select>
+								</div>
+								<div class="form-group">
+									<label>Test Requested</label>
+									<div id="ss-test-requested" class="pill-select-container">
+										<button type="button" class="pill-btn" data-value="iron">Iron Studies</button>
+										<button type="button" class="pill-btn" data-value="hplc">HPLC</button>
+										<button type="button" class="pill-btn" data-value="lap">LAP Score</button>
+										<button type="button" class="pill-btn" data-value="stains">Special stains</button>
+										<button type="button" class="pill-btn" data-value="spep">SPEP</button>
+										<button type="button" class="pill-btn" data-value="hb-electro">Hb Electrophoresis</button>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+
+						<!-- II. Clinical details -->
+						<fieldset>
+							<legend>II. Clinical Details</legend>
+							<div class="form-group"><label for="ss-complaints">Present Complaints</label><textarea id="ss-complaints" name="ss-complaints" rows="2"></textarea></div>
+							<div class="form-grid">
+								<div class="form-group"><label for="ss-pica">H/o Pica</label><input type="text" id="ss-pica" name="ss-pica"></div>
+								<div class="form-group"><label for="ss-transfusion">H/o Blood Transfusion</label><input type="text" id="ss-transfusion" name="ss-transfusion"></div>
+								<div class="form-group"><label for="ss-menstrual">Menstrual history</label><input type="text" id="ss-menstrual" name="ss-menstrual"></div>
+							</div>
+							<div class="form-group"><label for="ss-past-history">Past History</label><textarea id="ss-past-history" name="ss-past-history" rows="3"></textarea></div>
+							<fieldset>
+								<legend>Personal History</legend>
+								<div class="form-grid">
+									<div class="form-group"><label for="ss-diet">Diet</label><select id="ss-diet" name="ss-diet"><option value="veg">Veg</option><option value="non-veg">Non veg</option></select></div>
+									<div class="form-group"><label for="ss-sleep">Sleep</label><input type="text" id="ss-sleep" name="ss-sleep"></div>
+									<div class="form-group"><label for="ss-appetite">Appetite</label><input type="text" id="ss-appetite" name="ss-appetite"></div>
+								</div>
+								<div class="form-group"><label for="ss-drug-history">Drug history</label><textarea id="ss-drug-history" name="ss-drug-history" rows="2"></textarea></div>
+								<div class="form-group"><label for="ss-tb-history">TB history</label><input type="text" id="ss-tb-history" name="ss-tb-history"></div>
+								<div class="form-group"><label for="ss-comorbidities">DM/HTN/Thyroid/Dyslipidemia</label><input type="text" id="ss-comorbidities" name="ss-comorbidities"></div>
+							</fieldset>
+							<div class="form-group"><label for="ss-bleeding">H/o bleeding from any site</label><input type="text" id="ss-bleeding" name="ss-bleeding"></div>
+							<div class="form-group"><label for="ss-hematinics">H/o Hematinics</label><input type="text" id="ss-hematinics" name="ss-hematinics"></div>
+							<div class="form-group"><label for="ss-obstetric">Obstetric history</label><textarea id="ss-obstetric" name="ss-obstetric" rows="2"></textarea></div>
+							<div class="form-group"><label for="ss-family-history">Family History</label><textarea id="ss-family-history" name="ss-family-history" rows="2"></textarea></div>
+						</fieldset>
+
+						<!-- III. Previous Investigations -->
+						<fieldset>
+							<legend>III. Previous Investigations</legend>
+							<div id="ss-investigations-container"></div>
+							<button type="button" id="ss-add-investigation-btn" class="button-primary">Add Investigation Set</button>
+						</fieldset>
+
+						<!-- IV. Previous Radiology -->
+						<fieldset>
+							<legend>IV. Previous Radiology</legend>
+							<div class="form-group"><textarea id="ss-radiology" name="ss-radiology" rows="4"></textarea></div>
+						</fieldset>
+
+						<!-- V. Physical Exam -->
+						<fieldset>
+							<legend>V. Physical Exam</legend>
+							<fieldset>
+								<legend>General Physical Exam</legend>
+								<div class="form-grid-4-col">
+									<div class="form-group"><label for="ss-pallor">Pallor</label><input type="text" id="ss-pallor" name="ss-pallor"></div>
+									<div class="form-group"><label for="ss-icterus">Icterus</label><input type="text" id="ss-icterus" name="ss-icterus"></div>
+									<div class="form-group"><label for="ss-cyanosis">Cyanosis</label><input type="text" id="ss-cyanosis" name="ss-cyanosis"></div>
+									<div class="form-group"><label for="ss-clubbing">Clubbing</label><input type="text" id="ss-clubbing" name="ss-clubbing"></div>
+									<div class="form-group"><label for="ss-lymphadenopathy">Lymphadenopathy</label><input type="text" id="ss-lymphadenopathy" name="ss-lymphadenopathy"></div>
+									<div class="form-group"><label for="ss-edema">Edema</label><input type="text" id="ss-edema" name="ss-edema"></div>
+									<div class="form-group"><label for="ss-hepatomegaly">Hepatomegaly</label><input type="text" id="ss-hepatomegaly" name="ss-hepatomegaly"></div>
+									<div class="form-group"><label for="ss-splenomegaly">Splenomegaly</label><input type="text" id="ss-splenomegaly" name="ss-splenomegaly"></div>
+								</div>
+							</fieldset>
+							<div class="form-group"><label for="ss-phys-exam-notes">Notes</label><textarea id="ss-phys-exam-notes" name="ss-phys-exam-notes" rows="3"></textarea></div>
+						</fieldset>
+
+						<!-- VI. Coulter Findings -->
+						<fieldset>
+							<legend>VI. Coulter Findings</legend>
+							<div class="form-grid-4-col">
+								<div class="form-group"><label for="ss-WBC">WBC</label><input type="number" step="0.01" id="ss-WBC" name="WBC"></div>
+								<div class="form-group"><label for="ss-Neu%">Neu%</label><input type="number" step="0.01" id="ss-Neu%" name="Neu%"></div>
+								<div class="form-group"><label for="ss-Lym%">Lym%</label><input type="number" step="0.01" id="ss-Lym%" name="Lym%"></div>
+								<div class="form-group"><label for="ss-Mon%">Mon%</label><input type="number" step="0.01" id="ss-Mon%" name="Mon%"></div>
+								<div class="form-group"><label for="ss-Eos%">Eos%</label><input type="number" step="0.01" id="ss-Eos%" name="Eos%"></div>
+								<div class="form-group"><label for="ss-Bas%">Bas%</label><input type="number" step="0.01" id="ss-Bas%" name="Bas%"></div>
+								<div class="form-group"><label for="ss-RBC">RBC</label><input type="number" step="0.01" id="ss-RBC" name="RBC"></div>
+								<div class="form-group"><label for="ss-HGB">HGB</label><input type="number" step="0.01" id="ss-HGB" name="HGB"></div>
+								<div class="form-group"><label for="ss-HCT">HCT</label><input type="number" step="0.01" id="ss-HCT" name="HCT"></div>
+								<div class="form-group"><label for="ss-MCV">MCV</label><input type="number" step="0.01" id="ss-MCV" name="MCV"></div>
+								<div class="form-group"><label for="ss-MCH">MCH</label><input type="number" step="0.01" id="ss-MCH" name="MCH"></div>
+								<div class="form-group"><label for="ss-MCHC">MCHC</label><input type="number" step="0.01" id="ss-MCHC" name="MCHC"></div>
+								<div class="form-group"><label for="ss-RDW-CV">RDW-CV</label><input type="number" step="0.01" id="ss-RDW-CV" name="RDW-CV"></div>
+								<div class="form-group"><label for="ss-PLT">PLT</label><input type="number" step="0.01" id="ss-PLT" name="PLT"></div>
+								<div class="form-group"><label for="ss-MPV">MPV</label><input type="number" step="0.01" id="ss-MPV" name="MPV"></div>
+								<div class="form-group"><label for="ss-PDW">PDW</label><input type="number" step="0.01" id="ss-PDW" name="PDW"></div>
+								<div class="form-group"><label for="ss-PCT">PCT</label><input type="number" step="0.01" id="ss-PCT" name="PCT"></div>
+								<div class="form-group"><label for="ss-P-LCC">P-LCC</label><input type="number" step="0.01" id="ss-P-LCC" name="P-LCC"></div>
+								<div class="form-group"><label for="ss-P-LCR">P-LCR</label><input type="number" step="0.01" id="ss-P-LCR" name="P-LCR"></div>
+								<div class="form-group"><label for="ss-RET%">RET%</label><input type="number" step="0.01" id="ss-RET%" name="RET%"></div>
+								<div class="form-group"><label for="ss-IRF">IRF</label><input type="number" step="0.01" id="ss-IRF" name="IRF"></div>
+								<div class="form-group"><label for="ss-LFR">LFR</label><input type="number" step="0.01" id="ss-LFR" name="LFR"></div>
+								<div class="form-group"><label for="ss-MFR">MFR</label><input type="number" step="0.01" id="ss-MFR" name="MFR"></div>
+								<div class="form-group"><label for="ss-HFR">HFR</label><input type="number" step="0.01" id="ss-HFR" name="HFR"></div>
+								<div class="form-group"><label for="ss-IMG%">IMG%</label><input type="number" step="0.01" id="ss-IMG%" name="IMG%"></div>
+								<div class="form-group"><label for="ss-IPF%">IPF%</label><input type="number" step="0.01" id="ss-IPF%" name="IPF%"></div>
+								<div class="form-group"><label for="ss-RHE">RHE</label><input type="number" step="0.01" id="ss-RHE" name="RHE"></div>
+							</div>
+						</fieldset>
+
+						<!-- VII. Additional tests -->
+						<fieldset>
+							<legend>VII. Additional tests</legend>
+							<div class="form-grid">
+								<div class="form-group"><label for="ss-esr">ESR</label><input type="number" id="ss-esr" name="ss-esr"></div>
+								<div class="form-group"><label for="ss-g6pd">G6PD</label><input type="text" id="ss-g6pd" name="ss-g6pd"></div>
+							</div>
+						</fieldset>
+
+						<!-- VIII. Special Studies -->
+						<fieldset>
+							<legend>VIII. Special Studies</legend>
+							<div id="ss-special-studies-container"></div>
+						</fieldset>
+
+						<!-- IX. Peripheral Smear Examination -->
+						<fieldset>
+							<legend>IX. Peripheral Smear Examination</legend>
+							<div class="form-group"><label for="ss-rbc_morphology">RBC Morphology</label><textarea id="ss-rbc_morphology" name="ss-rbc_morphology" rows="4"></textarea></div>
+							<fieldset>
+								<legend>WBC Morphology</legend>
+									<div class="form-group"><label for="ss-wbc_comments">Comments</label><textarea id="ss-wbc_comments" name="ss-wbc_comments" rows="2"></textarea></div>
+									<fieldset>
+										<legend>Differential Leukocyte Count</legend>
+										<div class="dlc-controls">
+											<div class="form-group"><label for="ss-dlc-target">Target Count</label><input type="number" id="ss-dlc-target" value="100"></div>
+											<div class="toggle-switch-container"><label class="switch"><input type="checkbox" id="ss-dlc-mode-toggle"><span class="slider round"></span></label><span id="ss-dlc-mode-label">Mode: Increase</span></div>
+											<div id="ss-dlc-total-display">Total: 0 / 100</div>
+										</div>
+										<div id="ss-dlc-cell-grid" class="dlc-grid">
+											<div class="dlc-cell nrbc-cell-container"><button type="button" class="dlc-cell-button" id="ss-nrbc-btn" data-cell="nrbc"><div class="cell-icon icon-erythroid"></div></button><span class="cell-name">nRBCs</span><span class="cell-count" id="ss-nrbc-count" data-cell-count="nrbc">0</span><input type="hidden" name="ss_nrbc_count" id="ss-nrbc-count-hidden" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="neutrophil"><div class="cell-icon icon-neutrophil"></div></button><span class="cell-name">Neutrophil</span><span class="cell-count" data-cell-count="neutrophil">0</span><input type="hidden" name="ss_neutrophils" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="lymphocyte"><div class="cell-icon icon-lymphocyte"></div></button><span class="cell-name">Lymphocyte</span><span class="cell-count" data-cell-count="lymphocyte">0</span><input type="hidden" name="ss_lymphocytes" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="monocyte"><div class="cell-icon icon-monocyte"></div></button><span class="cell-name">Monocyte</span><span class="cell-count" data-cell-count="monocyte">0</span><input type="hidden" name="ss_monocytes" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="eosinophil"><div class="cell-icon icon-eosinophil"></div></button><span class="cell-name">Eosinophil</span><span class="cell-count" data-cell-count="eosinophil">0</span><input type="hidden" name="ss_eosinophils" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="basophil"><div class="cell-icon icon-basophil"></div></button><span class="cell-name">Basophil</span><span class="cell-count" data-cell-count="basophil">0</span><input type="hidden" name="ss_basophils" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="band"><div class="cell-icon icon-band"></div></button><span class="cell-name">Band Form</span><span class="cell-count" data-cell-count="band">0</span><input type="hidden" name="ss_band_forms" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="metamyelocyte"><div class="cell-icon icon-metamyelocyte"></div></button><span class="cell-name">Metamyelocyte</span><span class="cell-count" data-cell-count="metamyelocyte">0</span><input type="hidden" name="ss_meta_myelocytes" value="0"></div>
+											<div class="dlc-cell"><button type="button" class="dlc-cell-button" data-cell="atypical"><div class="cell-icon icon-atypical">A</div></button><span class="cell-name">Atypical</span><span class="cell-count" data-cell-count="atypical">0</span><input type="hidden" name="ss_atypical_cells" value="0"></div>
+										</div>
+										<div id="ss-dlc-summary" class="summary-display"></div>
+									</fieldset>
+									<div class="form-group"><label for="ss-additional_notes">Additional Notes</label><textarea id="ss-additional_notes" name="ss-additional_notes" rows="3"></textarea></div>
+								</fieldset>
+							<div class="form-group"><label for="ss-platelet_morphology">Platelet Morphology</label><textarea id="ss-platelet_morphology" name="ss-platelet_morphology" rows="2"></textarea></div>
+						</fieldset>
+
+						<!-- X. Impression & Advice -->
+						<fieldset>
+							<legend>X. Conclusion</legend>
+							<div class="form-group"><label for="ss-impression">Impression</label><textarea id="ss-impression" name="ss-impression" rows="3"></textarea></div>
+							<div class="form-group"><label for="ss-advice">Advice</label><textarea id="ss-advice" name="ss-advice" rows="3"></textarea></div>
+						</fieldset>
+
+						<button type="submit" class="button-success">Save Special Case</button>
+					</form>
+				</div>
+				<div id="bone-marrow-page" class="page">
+					<h1>Bone Marrow studies</h1>
+				</div>
+				<div id="dlc-page" class="page">
+					<h1>Free DLC</h1>
+				</div>
+				<div id="tools-page" class="page">
+					<h1>Tools</h1>
+				</div>
+			</main>
+
+			<!-- Settings Modal (hidden by default) -->
+			<div id="settings-modal" class="modal">
+				<div class="modal-content">
+					<span class="close-button">&times;</span>
+					<h2>Settings</h2>
+					<div class="setting-section">
+						<h3>Themes</h3>
+						<div class="theme-preview-box">
+							<div class="preview-sidebar">
+								<div class="preview-sidebar-item"></div>
+								<div class="preview-sidebar-item"></div>
+								<div class="preview-sidebar-item"></div>
+							</div>
+							<div class="preview-content">
+								<div class="preview-accent"></div>
+								<div class="preview-text-short"></div>
+								<div class="preview-text-long"></div>
+							</div>
+						</div>
+						<div class="theme-options">
+							<button class="theme-btn" data-theme="default">Default</button>
+							<button class="theme-btn" data-theme="theme1">Crimson</button>
+							<button class="theme-btn" data-theme="theme2">Violet</button>
+							<button class="theme-btn" data-theme="theme3">Forest</button>
+							<button class="theme-btn" data-theme="theme4">Amber</button>
+							<button class="theme-btn" data-theme="theme5">Ocean</button>
+						</div>
+					</div>
+					<div class="setting-section">
+						<h3>Display Mode</h3>
+						<div class="toggle-switch-container">
+							<label class="switch">
+								<input type="checkbox" id="dark-mode-toggle">
+								<span class="slider round"></span>
+							</label>
+							<span>Dark Mode</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- License Modal -->
+			<div id="license-modal" class="modal">
+				<div class="modal-content">
+					<span class="close-button">&times;</span>
+					<h2>BSD 2 - Clause</h2>
+					<p>
+					<p>Copyright 2025 Dr. Spandan Roy</p>
+
+					<p>Redistribution and use in source and binary forms, with or without modification,
+					are permitted provided that the following conditions are met:</p>
+
+					<p>
+					<ol> 	
+						<li>Redistributions of source code must retain the above copyright notice, this
+							list of conditions and the following disclaimer.<br>
+
+							<li>Redistributions in binary form must reproduce the above copyright notice,</li>
+							this list of conditions and the following disclaimer in the documentation
+							and/or other materials provided with the distribution.</li>
+					</ol>
+					</p>
+
+					<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+					ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+					WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+					IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+					INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+					BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+					DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+					OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+					OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+					OF THE POSSIBILITY OF SUCH DAMAGE.
+					</p>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
