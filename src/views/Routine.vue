@@ -9,6 +9,7 @@
       <lab-details-view v-model:labDetails="labDetails" />
       <coulter-view v-model:coulterData="coulterData" />
       <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
+      <dlc-counter v-model:dlcData="dlcData" />
     </div>
     <!-- Floating Action Buttons -->
     <div class="floating-buttons">
@@ -23,6 +24,7 @@
 import CoulterView from '../components/subviews/CoulterView.vue'
 import LabDetailsView from '../components/subviews/LabDetailsView.vue'
 import PeripheralSmearView from '../components/subviews/PeripheralSmearView.vue'
+import DlcCounter from '../components/subviews/DlcCounter.vue'
 import ErrorDisplay from '../components/subviews/ErrorDisplay.vue'
 import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
 import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
@@ -33,6 +35,7 @@ export default {
     CoulterView,
     LabDetailsView,
     PeripheralSmearView,
+    DlcCounter,
     ErrorDisplay,
     LoadingSpinner,
     ContentSaveAllIcon,
@@ -51,6 +54,7 @@ export default {
         wbc: {},
         platelet: {},
       },
+      dlcData: {},
       coulterData: {
         WBC: '5.0',
         'Neu#': '2.5',

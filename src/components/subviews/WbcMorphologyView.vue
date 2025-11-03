@@ -21,15 +21,22 @@
           "
         />
       </div>
+      <div>
+        <dlc-counter v-model:dlcData="dlcData" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import DlcCounter from '../../components/subviews/DlcCounter.vue'
 
 export default defineComponent({
   name: 'WbcMorphologyView',
+  components: {
+    DlcCounter,
+  },
   props: {
     wbcMorphology: {
       type: Object as () => Record<string, string>,
@@ -39,8 +46,9 @@ export default defineComponent({
   emits: ['update:wbcMorphology'],
   data() {
     return {
-      wbcProperties: ['Notes', 'DLC'],
+      wbcProperties: ['Notes'],
       paletteColors: ['--accent', '--accent2', '--accent-hover', '--disabled-color'],
+      dlcData: {},
     }
   },
   methods: {
@@ -74,7 +82,7 @@ export default defineComponent({
 
 .morphology-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
 }
 
