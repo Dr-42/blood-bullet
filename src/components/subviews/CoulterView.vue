@@ -163,4 +163,10 @@ export default defineComponent({
   outline: none;
   border-color: var(--accent-hover);
 }
+
+@media (max-width: 600px) {
+  .coulter-grid {
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
+  }
+}
 </style>

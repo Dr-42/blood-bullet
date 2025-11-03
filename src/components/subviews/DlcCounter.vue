@@ -379,4 +379,20 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+@media (max-width: 600px) {
+  .dlc-grid {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+
+  .cell-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .dlc-cell {
+    padding: 0.2rem;
+    font-size: 0.7rem;
+  }
+}
 </style>

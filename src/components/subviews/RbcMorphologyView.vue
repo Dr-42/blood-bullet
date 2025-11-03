@@ -40,13 +40,7 @@ export default defineComponent({
   emits: ['update:rbcMorphology'],
   data() {
     return {
-      rbcProperties: [
-        'Degree',
-        'Anisocytosis',
-        'Poikilocytosis',
-        'Polychromatophils',
-        'Additional Notes',
-      ],
+      rbcProperties: ['Degree', 'Aniso', 'Poikilo', 'Polys', 'Notes'],
       paletteColors: ['--accent', '--accent2', '--accent-hover', '--disabled-color'],
     }
   },
@@ -60,7 +54,6 @@ export default defineComponent({
 
 <style scoped>
 .morphology-section-box {
-  position: relative;
   border: 1px solid var(--accent);
   border-radius: 10px;
   padding: 1.5rem 1rem 1rem 1rem;
@@ -81,8 +74,9 @@ export default defineComponent({
 
 .morphology-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
+  width: 100%;
 }
 
 .morphology-item {
@@ -91,6 +85,8 @@ export default defineComponent({
   padding: 1rem;
   border-left: 5px solid;
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .full-width-item {
@@ -123,5 +119,12 @@ export default defineComponent({
 .morphology-input:focus {
   outline: none;
   border-color: var(--accent-hover);
+}
+
+@media (max-width: 600px) {
+  .morphology-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    break-inside: avoid;
+  }
 }
 </style>
