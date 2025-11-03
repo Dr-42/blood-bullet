@@ -11,7 +11,6 @@
       ref="fileInput"
       @change="handleImageUpload"
       accept="image/*"
-      capture="camera"
       style="display: none"
     />
     <div class="coulter-grid">
@@ -23,7 +22,7 @@
       >
         <div class="property-name">{{ property }}</div>
         <input
-          type="text"
+          type="number"
           class="coulter-input"
           :value="coulterData[property]"
           @input="formatAndEmit(property, ($event.target as HTMLInputElement).value)"
@@ -103,7 +102,7 @@ export default defineComponent({
 
       const num = parseFloat(formattedValue)
       if (!isNaN(num)) {
-        formattedValue = num.toFixed(3)
+        formattedValue = num
       } else {
         formattedValue = this.coulterData[property] || ''
       }
@@ -146,41 +145,7 @@ export default defineComponent({
         Given the following text from a Coulter report, parse it and extract the values for the hematology parameters.
         The output should be a valid JSON object. The keys of the JSON should be the parameter names and fit the following data structure:
         {
-          "WBC": "",
-          "Neu#": "",
-          "Lym#": "",
-          "Mon#": "",
-          "Eos#": "",
-          "Bas#": "",
-          "Neu%": "",
-          "Lym%": "",
-          "Mon%": "",
-          "Eos%": "",
-          "Bas%": "",
-          "RBC": "",
-          "HGB": "",
-          "HCT": "",
-          "MCV": "",
-          "MCH": "",
-          "MCHC": "",
-          "RDW-CV": "",
-          "RDW-SD": "",
-          "PLT": "",
-          "MPV": "",
-          "PDW": "",
-          "PCT": "",
-          "P-LCC": "",
-          "P-LCR": "",
-          "RET#": "",
-          "RET%": "",
-          "IRF": "",
-          "LFR": "",
-          "MFR": "",
-          "HFR": "",
-          "IMG#": "",
-          "IMG%": "",
-          "IPF": "",
-          "RHE": ""
+          "WBC": "", "Neu#": "", "Lym#": "", "Mon#": "", "Eos#": "", "Bas#": "", "Neu%": "", "Lym%": "", "Mon%": "", "Eos%": "", "Bas%": "", "RBC": "", "HGB": "", "HCT": "", "MCV": "", "MCH": "", "MCHC": "", "RDW-CV": "", "RDW-SD": "", "PLT": "", "MPV": "", "PDW": "", "PCT": "", "P-LCC": "", "P-LCR": "", "RET#": "", "RET%": "", "IRF": "", "LFR": "", "MFR": "", "HFR": "", "IMG#": "", "IMG%": "", "IPF": "", "RHE": ""
         }
         The values should be the numeric values as strings.
         If a value is not found for a parameter, the value should be -1. Give special emphasis on decimals and percentages. The accuracy of the values is critical.
