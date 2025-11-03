@@ -54,9 +54,19 @@ import type { CellType } from '../../types'
 
 const cellTypes: CellType[] = [
   { name: 'Neutrophil', atlas_key: 'neutrophil', granulocyte: true, vibrate_pattern: [350, 0, 0] },
-  { name: 'Lymphocyte', atlas_key: 'lymphocyte', granulocyte: false, vibrate_pattern: [150, 150, 50] },
+  {
+    name: 'Lymphocyte',
+    atlas_key: 'lymphocyte',
+    granulocyte: false,
+    vibrate_pattern: [150, 150, 50],
+  },
   { name: 'Monocyte', atlas_key: 'monocyte', granulocyte: false, vibrate_pattern: [150, 50, 150] },
-  { name: 'Eosinophil', atlas_key: 'eosinophil', granulocyte: true, vibrate_pattern: [350, 50, 50] },
+  {
+    name: 'Eosinophil',
+    atlas_key: 'eosinophil',
+    granulocyte: true,
+    vibrate_pattern: [350, 50, 50],
+  },
   { name: 'Basophil', atlas_key: 'basophil', granulocyte: true, vibrate_pattern: [450] },
   { name: 'Band Form', atlas_key: 'band', granulocyte: true, vibrate_pattern: [300, 100, 100] },
   {
@@ -65,7 +75,12 @@ const cellTypes: CellType[] = [
     granulocyte: true,
     vibrate_pattern: [400, 50, 50],
   },
-  { name: 'Atypical', atlas_key: 'myeloblast', granulocyte: false, vibrate_pattern: [150, 100, 100] },
+  {
+    name: 'Atypical',
+    atlas_key: 'myeloblast',
+    granulocyte: false,
+    vibrate_pattern: [150, 100, 100],
+  },
   { name: 'nRBC', atlas_key: 'erythroid', granulocyte: false, vibrate_pattern: [100] },
 ]
 
@@ -422,7 +437,7 @@ input:checked + .slider:before {
 
 @media (max-width: 600px) {
   .dlc-grid {
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   }
 
   .cell-icon {
@@ -431,7 +446,7 @@ input:checked + .slider:before {
   }
 
   .dlc-cell {
-    padding: 0.2rem;
+    padding: 0.1rem;
     font-size: 0.7rem;
   }
 }
