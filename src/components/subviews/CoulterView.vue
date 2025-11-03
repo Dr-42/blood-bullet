@@ -1,6 +1,6 @@
 <template>
   <div class="coulter-section-box">
-    <div class="coulter-section-label">Coulter View</div>
+    <div class="coulter-section-label">Coulter Results</div>
     <div class="coulter-grid">
       <div
         v-for="(property, index) in coulterProperties"
@@ -79,23 +79,23 @@ export default defineComponent({
       return `var(${this.paletteColors[index % this.paletteColors.length]})`
     },
     formatAndEmit(property: string, value: string) {
-      let formattedValue: string = value.trim();
+      let formattedValue: string = value.trim()
 
       if (formattedValue === '') {
         // Allow empty string
-        this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue });
-        return;
+        this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue })
+        return
       }
 
-      const num = parseFloat(formattedValue);
+      const num = parseFloat(formattedValue)
       if (!isNaN(num)) {
-        formattedValue = num.toFixed(3);
+        formattedValue = num.toFixed(3)
       } else {
         // If not a valid number, revert to previous valid value or empty string
-        formattedValue = this.coulterData[property] || '';
+        formattedValue = this.coulterData[property] || ''
       }
 
-      this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue });
+      this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue })
     },
   },
 })

@@ -8,6 +8,7 @@
       <h1 class="page-title">Routine Case</h1>
       <lab-details-view v-model:labDetails="labDetails" />
       <coulter-view v-model:coulterData="coulterData" />
+      <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
     </div>
     <!-- Floating Action Buttons -->
     <div class="floating-buttons">
@@ -21,6 +22,7 @@
 <script lang="ts">
 import CoulterView from '../components/subviews/CoulterView.vue'
 import LabDetailsView from '../components/subviews/LabDetailsView.vue'
+import PeripheralSmearView from '../components/subviews/PeripheralSmearView.vue'
 import ErrorDisplay from '../components/subviews/ErrorDisplay.vue'
 import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
 import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
@@ -30,6 +32,7 @@ export default {
   components: {
     CoulterView,
     LabDetailsView,
+    PeripheralSmearView,
     ErrorDisplay,
     LoadingSpinner,
     ContentSaveAllIcon,
@@ -42,6 +45,11 @@ export default {
       labDetails: {
         caseId: '12345',
         date: new Date().toISOString().slice(0, 10),
+      },
+      peripheralSmearData: {
+        rbc: {},
+        wbc: {},
+        platelet: {},
       },
       coulterData: {
         WBC: '5.0',
