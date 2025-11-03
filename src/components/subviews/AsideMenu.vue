@@ -6,6 +6,9 @@
         <li @click="closeMenu">
           <router-link to="/"> <home-icon class="aside-icon" /> Home </router-link>
         </li>
+        <li @click="closeMenu">
+          <router-link to="/routine"> <file-document-icon class="aside-icon" /> Routine </router-link>
+        </li>
       </ul>
     </div>
     <ul class="footer-links">
@@ -30,6 +33,7 @@
 import HomeIcon from 'vue-material-design-icons/Home.vue'
 import InfoIcon from 'vue-material-design-icons/Information.vue'
 import LicenseIcon from 'vue-material-design-icons/Certificate.vue'
+import FileDocumentIcon from 'vue-material-design-icons/FileDocument.vue'
 
 import InfoModal from '../modals/InfoModal.vue'
 
@@ -46,6 +50,7 @@ export default {
     HomeIcon,
     InfoIcon,
     LicenseIcon,
+    FileDocumentIcon,
   },
   props: {
     isOpen: {
