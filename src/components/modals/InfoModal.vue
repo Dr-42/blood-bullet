@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'InfoModal',
   emits: ['close'],
@@ -24,10 +24,10 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit('close')
     },
   },
-};
+}
 </script>
 
 <style scoped>

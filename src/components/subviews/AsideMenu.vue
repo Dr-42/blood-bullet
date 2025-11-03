@@ -28,8 +28,6 @@
 
 <script lang="ts">
 import HomeIcon from 'vue-material-design-icons/Home.vue'
-import HistoryIcon from 'vue-material-design-icons/History.vue'
-import AnalysisIcon from 'vue-material-design-icons/ChartLine.vue'
 import InfoIcon from 'vue-material-design-icons/Information.vue'
 import LicenseIcon from 'vue-material-design-icons/Certificate.vue'
 
@@ -46,8 +44,6 @@ export default {
     InfoModal,
 
     HomeIcon,
-    HistoryIcon,
-    AnalysisIcon,
     InfoIcon,
     LicenseIcon,
   },
@@ -77,7 +73,14 @@ export default {
           body: 'This application is licensed under the BSD-2-Clause license.',
         },
       }
-      this.modalContent = contentMap[type]
+      if (type in contentMap) {
+        this.modalContent = contentMap[type]!
+      } else {
+        this.modalContent = {
+          title: 'Error',
+          body: 'Content not found.',
+        }
+      }
     },
   },
 }

@@ -58,7 +58,7 @@ export default {
       asideOpen: false,
       currentModal: null as string | null,
       error: false,
-      errorText: {},
+      errorText: '',
       activePaletteIdx: 0,
     }
   },
@@ -73,7 +73,7 @@ export default {
         paletteJson = localStorage.getItem('palette_0')
       }
 
-      const paletteDataObj = JSON.parse(paletteJson)
+      const paletteDataObj = JSON.parse(paletteJson!)
       const paletteData = PaletteData.fromJson(paletteDataObj)
       const palette = paletteData
       this.activePaletteIdx = palette.idx

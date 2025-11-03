@@ -9,14 +9,14 @@
           class="palette-option"
           :style="{
             background: `linear-gradient(to right, ${palette.bg}, ${palette.bgDark})`,
-            border: palette.selected ? `2px solid ${palette.accent2}` : 'none'
+            border: palette.selected ? `2px solid ${palette.accent2}` : 'none',
           }"
           @click="selectPalette(index)"
         >
           <div
             class="palette-circle"
             :style="{
-              background: `linear-gradient(to right, ${palette.accent}, ${palette.accentHover})`
+              background: `linear-gradient(to right, ${palette.accent}, ${palette.accentHover})`,
             }"
           ></div>
           <span>{{ palette.name }}</span>
@@ -34,11 +34,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { Palette, PaletteData } from "../../types";
+import { defineComponent } from 'vue'
+import { Palette, PaletteData } from '../../types'
 
 export default defineComponent({
-  name: "PaletteSelectorModal",
+  name: 'PaletteSelectorModal',
   props: {
     activePaletteIdx: {
       type: Number,
@@ -46,134 +46,139 @@ export default defineComponent({
     },
   },
   data() {
+    const palettes = [
+      {
+        name: 'Lavender',
+        accent: '#3f0f3f',
+        accentHover: '#7d1d4d',
+        accent2: '#1d7d7d',
+        bg: '#1f071f',
+        bgDark: '#000000',
+        disabledColor: '#4d1d7d',
+      },
+      {
+        name: 'Oceans',
+        accent: '#050555',
+        accentHover: '#460885',
+        accent2: '#088508',
+        bg: '#020727',
+        bgDark: '#00000d',
+        disabledColor: '#b4b4da',
+      },
+      {
+        name: 'Forest',
+        accent: '#0e3e3e',
+        accentHover: '#174068',
+        accent2: '#686817',
+        bg: '#061f1f',
+        bgDark: '#041414',
+        disabledColor: '#d0e0e0',
+      },
+      {
+        name: 'Sunset',
+        accent: '#724e0c',
+        accentHover: '#a02711',
+        accent2: '#11a06e',
+        bg: '#201603',
+        bgDark: '#010b01',
+        disabledColor: '#e2d3b7',
+      },
+      {
+        name: 'Berry',
+        accent: '#8b003e',
+        accentHover: '#b8004d',
+        accent2: '#f95d89',
+        bg: '#2c0019',
+        bgDark: '#1a000f',
+        disabledColor: '#733f5c',
+      },
+      {
+        name: 'Golden',
+        accent: '#d4af37',
+        accentHover: '#e5c454',
+        accent2: '#f9e79f',
+        bg: '#3e2b00',
+        bgDark: '#2a1e00',
+        disabledColor: '#857550',
+      },
+      {
+        name: 'Rose',
+        accent: '#c48d87',
+        accentHover: '#d8a79f',
+        accent2: '#f5cec7',
+        bg: '#3b2925',
+        bgDark: '#2b1e1b',
+        disabledColor: '#806e68',
+      },
+      {
+        name: 'Teal',
+        accent: '#00796b',
+        accentHover: '#009688',
+        accent2: '#80cbc4',
+        bg: '#00231d',
+        bgDark: '#001512',
+        disabledColor: '#4a6663',
+      },
+      {
+        name: 'Twilight',
+        accent: '#6d0000',
+        accentHover: '#a40000',
+        accent2: '#ff6347',
+        bg: '#2a0000',
+        bgDark: '#140000',
+        disabledColor: '#7f3e3e',
+      },
+    ].map((p) => ({ ...Palette.fromObject(p), selected: false }))
     return {
-      palettes: [
-        {
-          name: "Lavender",
-          accent: "#3f0f3f",
-          accentHover: "#7d1d4d",
-          accent2: "#1d7d7d",
-          bg: "#1f071f",
-          bgDark: "#000000",
-          disabledColor: "#4d1d7d",
-          selected: false,
-        },
-        {
-          name: "Oceans",
-          accent: "#050555",
-          accentHover: "#460885",
-          accent2: "#088508",
-          bg: "#020727",
-          bgDark: "#00000d",
-          disabledColor: "#b4b4da",
-          selected: false,
-        },
-        {
-          name: "Forest",
-          accent: "#0e3e3e",
-          accentHover: "#174068",
-          accent2: "#686817",
-          bg: "#061f1f",
-          bgDark: "#041414",
-          disabledColor: "#d0e0e0",
-          selected: false,
-        },
-        {
-          name: "Sunset",
-          accent: "#724e0c",
-          accentHover: "#a02711",
-          accent2: "#11a06e",
-          bg: "#201603",
-          bgDark: "#010b01",
-          disabledColor: "#e2d3b7",
-          selected: false,
-        },
-        {
-          name: "Berry",
-          accent: "#8b003e",
-          accentHover: "#b8004d",
-          accent2: "#f95d89",
-          bg: "#2c0019",
-          bgDark: "#1a000f",
-          disabledColor: "#733f5c",
-          selected: false,
-        },
-        {
-          name: "Golden",
-          accent: "#d4af37",
-          accentHover: "#e5c454",
-          accent2: "#f9e79f",
-          bg: "#3e2b00",
-          bgDark: "#2a1e00",
-          disabledColor: "#857550",
-          selected: false,
-        },
-        {
-          name: "Rose",
-          accent: "#c48d87",
-          accentHover: "#d8a79f",
-          accent2: "#f5cec7",
-          bg: "#3b2925",
-          bgDark: "#2b1e1b",
-          disabledColor: "#806e68",
-          selected: false,
-        },
-        {
-          name: "Teal",
-          accent: "#00796b",
-          accentHover: "#009688",
-          accent2: "#80cbc4",
-          bg: "#00231d",
-          bgDark: "#001512",
-          disabledColor: "#4a6663",
-          selected: false,
-        },
-        {
-          name: "Twilight",
-          accent: "#6d0000",
-          accentHover: "#a40000",
-          accent2: "#ff6347",
-          bg: "#2a0000",
-          bgDark: "#140000",
-          disabledColor: "#7f3e3e",
-          selected: false,
-        },
-      ],
-    };
+      palettes,
+    }
   },
   computed: {
     selectedPalette() {
-      const selectedPalette = this.palettes.find((palette) => palette.selected);
-      if (!selectedPalette) {
-        return this.palettes[0];
-      } else {
-        return selectedPalette;
-      }
+      const selectedPalette = this.palettes.find((palette) => palette.selected)
+      return selectedPalette || this.palettes[0]
+    },
+    selectedBg() {
+      return this.selectedPalette!.bg
+    },
+    selectedBgDark() {
+      return this.selectedPalette!.bgDark
+    },
+    selectedAccent() {
+      return this.selectedPalette!.accent
+    },
+    selectedAccentHover() {
+      return this.selectedPalette!.accentHover
+    },
+    selectedAccent2() {
+      return this.selectedPalette!.accent2
+    },
+    selectedDisabledColor() {
+      return this.selectedPalette!.disabledColor
     },
   },
   methods: {
     selectPalette(index: number) {
-      this.palettes.forEach((palette, i) => {
-        palette.selected = i === index;
-      });
+      this.palettes.forEach((palette) => {
+        palette.selected = false
+      })
+      this.palettes[index]!.selected = true
     },
     applyPalette() {
-      if (this.selectedPalette) {
-        const data = Palette.fromObject(this.selectedPalette);
-        const idx = this.palettes.findIndex(palette => palette.name === this.selectedPalette.name);
-        const res = new PaletteData(idx, data);
-        this.$emit("paletteApplied", res);
-        this.closeModal();
-      }
+      const data = Palette.fromObject(this.selectedPalette!)
+      const idx = this.palettes.findIndex((palette) => palette.name === this.selectedPalette!.name)
+      const res = new PaletteData(idx, data)
+      this.$emit('paletteApplied', res)
+      this.closeModal()
     },
     closeModal() {
-      this.$emit("close");
+      this.$emit('close')
     },
   },
   mounted() {
-    this.selectPalette(this.activePaletteIdx);
-  }
-});
+    this.selectPalette(this.activePaletteIdx)
+  },
+})
 </script>
 
 <style scoped>
@@ -190,9 +195,16 @@ export default defineComponent({
   z-index: 20;
 }
 
+--selectedBg: var(v-bind(selectedBg), --bg);
+--selectedBgDark: var(v-bind(selectedBgDark), --bg-dark);
+--selectedAccent: var(v-bind(selectedAccent), --accent);
+--selectedAccentHover: var(v-bind(selectedAccentHover), --accent-hover);
+--selectedAccent2: var(v-bind(selectedAccent2), --accent2);
+--selectedDisabledColor: var(v-bind(selectedDisabledColor), --disabled-color);
+
 .modal {
   color: #e2e2e2;
-  background-color: v-bind("selectedPalette.bg");
+  background-color: var(--selectedBg, --bg);
   padding: 20px;
   border-radius: 8px;
   width: 90%;
@@ -227,7 +239,7 @@ export default defineComponent({
   height: 50px;
   border-radius: 50%;
   margin-bottom: 10px;
-  border: 1px solid v-bind("selectedPalette.accent2");
+  border: 1px solid var(--selectedAccent2, --accent2);
 }
 
 .modal-actions {
@@ -237,7 +249,7 @@ export default defineComponent({
 }
 
 .cancel-btn {
-  background-color: v-bind("selectedPalette.accent2");
+  background-color: var(--selectedAccent2, --accent2);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -246,7 +258,7 @@ export default defineComponent({
 }
 
 .submit-btn {
-  background-color: v-bind("selectedPalette.accent");
+  background-color: var(--selectedAccent, --accent);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -255,11 +267,11 @@ export default defineComponent({
 }
 
 .cancel-btn:hover {
-  background-color: v-bind("selectedPalette.accentHover");
+  background-color: var(--selectedAccentHover, --accentHover);
 }
 
 .submit-btn:hover {
-  background-color: v-bind("selectedPalette.accentHover");
+  background-color: var(--selectedAccentHover, --accentHover);
 }
 
 .submit-btn:disabled {

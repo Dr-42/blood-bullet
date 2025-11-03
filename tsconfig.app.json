@@ -7,6 +7,14 @@
 
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "composite": true,
+    "moduleResolution": "bundler",
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "src/types/*.d.ts"
+  ]
 }

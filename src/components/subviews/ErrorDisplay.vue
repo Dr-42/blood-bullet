@@ -12,20 +12,15 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'ErrorDisplay',
   props: {
-    errorText: {
-      type: Object,
-      required: true,
-    },
+    errorText: String,
   },
   computed: {
     errorString(): string {
       //Check if ServerError key is present
-      if (this.errorText.ServerError) {
-        return `Server Error: ${this.errorText.ServerError}`
-      } else if (this.errorText.ClientError) {
-        return `Client Error: ${this.errorText.ClientError}`
+      if (this.errorText) {
+        return `Server Error: ${this.errorText}`
       } else {
-        return JSON.stringify(this.errorText)
+        return 'An unknown error has occurred.'
       }
     },
   },
