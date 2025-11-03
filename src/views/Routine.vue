@@ -6,6 +6,7 @@
     </div>
     <div id="content" v-else>
       <h1 class="page-title">Routine Case</h1>
+      <lab-details-view v-model:labDetails="labDetails" />
       <coulter-view v-model:coulterData="coulterData" />
     </div>
     <!-- Floating Action Buttons -->
@@ -19,6 +20,7 @@
 
 <script lang="ts">
 import CoulterView from '../components/subviews/CoulterView.vue'
+import LabDetailsView from '../components/subviews/LabDetailsView.vue'
 import ErrorDisplay from '../components/subviews/ErrorDisplay.vue'
 import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
 import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
@@ -27,6 +29,7 @@ export default {
   name: 'Routine',
   components: {
     CoulterView,
+    LabDetailsView,
     ErrorDisplay,
     LoadingSpinner,
     ContentSaveAllIcon,
@@ -36,6 +39,10 @@ export default {
       loading: false,
       error: false,
       errorText: '',
+      labDetails: {
+        caseId: '12345',
+        date: new Date().toISOString().slice(0, 10),
+      },
       coulterData: {
         WBC: '5.0',
         'Neu#': '2.5',
