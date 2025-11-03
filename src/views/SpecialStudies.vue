@@ -25,6 +25,10 @@
       </div>
       <coulter-view v-model:coulterData="coulterData" />
       <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
+      <iron-studies-view v-if="patientDetails.testsRequested.includes('Iron Studies')" v-model:ironStudies="ironStudies" />
+      <h-p-l-c-view v-if="patientDetails.testsRequested.includes('HPLC')" v-model:hplc="hplc" />
+      <l-a-p-score-view v-if="patientDetails.testsRequested.includes('LAP Score')" v-model:lapScore="lapScore" />
+      <special-stains-view v-if="patientDetails.testsRequested.includes('Special Stains')" v-model:specialStains="specialStains" />
     </div>
     <!-- Floating Action Buttons -->
     <div class="floating-buttons">
@@ -48,6 +52,11 @@ import ClinicalDetailsView from '../components/subviews/ClinicalDetails.vue'
 
 import PreviousInvestigationsView from '../components/subviews/PreviousInvestigations.vue'
 
+import IronStudiesView from '../components/subviews/IronStudies.vue'
+import HPLCView from '../components/subviews/HPLC.vue'
+import LAPScoreView from '../components/subviews/LAPScore.vue'
+import SpecialStainsView from '../components/subviews/SpecialStains.vue'
+
 export default {
   name: 'SpecialStudies',
   components: {
@@ -60,6 +69,10 @@ export default {
     PatientDetailsView,
     ClinicalDetailsView,
     PreviousInvestigationsView,
+    IronStudiesView,
+    HPLCView,
+    LAPScoreView,
+    SpecialStainsView,
   },
   data() {
     return {
@@ -105,6 +118,26 @@ export default {
         splenomegaly: false,
       },
       previousInvestigations: [],
+      ironStudies: {
+        fe: '',
+        tibc: '',
+        ts: '',
+        sFerritin: '',
+      },
+      hplc: {
+        hbf: '',
+        hba2: '',
+        others: [],
+      },
+      lapScore: {
+        score: '',
+      },
+      specialStains: {
+        mpo: '',
+        sbb: '',
+        pas: '',
+        others: [],
+      },
       peripheralSmearData: {
         rbc: {},
         wbc: {},
