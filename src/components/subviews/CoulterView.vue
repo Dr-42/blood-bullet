@@ -1,6 +1,24 @@
 <template>
   <div class="coulter-section-box">
+    <div v-if="ocrLoading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div>Processing Image...</div>
+    </div>
+    <ocr-result-modal
+      v-if="showOcrModal"
+      :ocrText="ocrResult"
+      @close="showOcrModal = false"
+    />
     <div class="coulter-section-label">Coulter Results</div>
+    <button class="scan-button" @click="openFilePicker">Scan Report</button>
+    <input
+      type="file"
+      ref="fileInput"
+      @change="handleImageUpload"
+      accept="image/*"
+      capture="camera"
+      style="display: none"
+    />
     <div class="coulter-grid">
       <div
         v-for="(property, index) in coulterProperties"
@@ -22,9 +40,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Tesseract from 'tesseract.js'
+import OcrResultModal from '../modals/OcrResultModal.vue'
 
 export default defineComponent({
   name: 'CoulterView',
+  components: {
+    OcrResultModal,
+  },
   props: {
     coulterData: {
       type: Object as () => Record<string, string>,
@@ -34,6 +57,9 @@ export default defineComponent({
   emits: ['update:coulterData'],
   data() {
     return {
+      ocrLoading: false,
+      ocrResult: '',
+      showOcrModal: false,
       coulterProperties: [
         'WBC',
         'Neu#',
@@ -82,7 +108,6 @@ export default defineComponent({
       let formattedValue: string = value.trim()
 
       if (formattedValue === '') {
-        // Allow empty string
         this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue })
         return
       }
@@ -91,11 +116,36 @@ export default defineComponent({
       if (!isNaN(num)) {
         formattedValue = num.toFixed(3)
       } else {
-        // If not a valid number, revert to previous valid value or empty string
         formattedValue = this.coulterData[property] || ''
       }
 
       this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue })
+    },
+    openFilePicker() {
+      ;(this.$refs.fileInput as HTMLInputElement).click()
+    },
+    handleImageUpload(event: Event) {
+      const input = event.target as HTMLInputElement
+      if (input.files && input.files[0]) {
+        const file = input.files[0]
+        this.ocrLoading = true
+        this.ocrResult = 'Processing...'
+
+        Tesseract.recognize(file, 'eng', {
+          logger: (m) => console.log(m),
+        })
+          .then(({ data: { text } }) => {
+            this.ocrLoading = false
+            this.ocrResult = text
+            this.showOcrModal = true
+          })
+          .catch((err) => {
+            this.ocrLoading = false
+            this.ocrResult = `Error: ${err.message}`
+            console.error(err)
+            this.showOcrModal = true // Show error in modal as well
+          })
+      }
     },
   },
 })
@@ -111,6 +161,41 @@ export default defineComponent({
   background-color: var(--bg-dark);
 }
 
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  color: white;
+  border-radius: 10px;
+}
+
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .coulter-section-label {
   position: absolute;
   top: -0.75rem;
@@ -120,6 +205,22 @@ export default defineComponent({
   padding: 0 0.5rem;
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+.scan-button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.scan-button:hover {
+  background-color: var(--accent-hover);
 }
 
 .coulter-grid {

@@ -1,2 +1,5 @@
+ignoredBuiltDependencies:
+  - tesseract.js
+
 onlyBuiltDependencies:
   - electron
