@@ -18,7 +18,7 @@
     </div>
 
     <div class="nrbc-section">
-      <div class="dlc-cell nrbc-cell" @click="handleCellClick(nRbcType.name)">
+      <div class="dlc-cell nrbc-cell" @touchend="handleCellClick(nRbcType.name)">
         <div class="cell-icon" :style="getIconStyle(nRbcType.atlas_key)"></div>
         <div class="cell-name">{{ nRbcType.name }}</div>
         <div class="cell-count">{{ dlcData[nRbcType.name] || 0 }}</div>
@@ -32,7 +32,7 @@
         v-for="cell in wbcTypes"
         :key="cell.name"
         class="dlc-cell"
-        @click="handleCellClick(cell.name)"
+        @pointerdown="handleCellClick(cell.name)"
       >
         <div class="cell-icon" :style="getIconStyle(cell.atlas_key)"></div>
         <div class="cell-name">{{ cell.name }}</div>
@@ -52,6 +52,23 @@ import { defineComponent } from 'vue'
 import atlasData from '../../../public/images/at_guide.json'
 import type { CellType } from '../../types'
 
+const cellTypes: CellType[] = [
+  { name: 'Neutrophil', atlas_key: 'neutrophil', granulocyte: true, vibrate_pattern: [350, 0, 0] },
+  { name: 'Lymphocyte', atlas_key: 'lymphocyte', granulocyte: false, vibrate_pattern: [150, 150, 50] },
+  { name: 'Monocyte', atlas_key: 'monocyte', granulocyte: false, vibrate_pattern: [150, 50, 150] },
+  { name: 'Eosinophil', atlas_key: 'eosinophil', granulocyte: true, vibrate_pattern: [350, 50, 50] },
+  { name: 'Basophil', atlas_key: 'basophil', granulocyte: true, vibrate_pattern: [450] },
+  { name: 'Band Form', atlas_key: 'band', granulocyte: true, vibrate_pattern: [300, 100, 100] },
+  {
+    name: 'Metamyelocyte',
+    atlas_key: 'metamyelocyte',
+    granulocyte: true,
+    vibrate_pattern: [400, 50, 50],
+  },
+  { name: 'Atypical', atlas_key: 'myeloblast', granulocyte: false, vibrate_pattern: [150, 100, 100] },
+  { name: 'nRBC', atlas_key: 'erythroid', granulocyte: false, vibrate_pattern: [100] },
+]
+
 export default defineComponent({
   name: 'DlcCounter',
   props: {
@@ -62,25 +79,19 @@ export default defineComponent({
   },
   emits: ['update:dlcData'],
   data() {
-    const cellTypes: CellType[] = [
-      { name: 'Neutrophil', atlas_key: 'neutrophil' },
-      { name: 'Lymphocyte', atlas_key: 'lymphocyte' },
-      { name: 'Monocyte', atlas_key: 'monocyte' },
-      { name: 'Eosinophil', atlas_key: 'eosinophil' },
-      { name: 'Basophil', atlas_key: 'basophil' },
-      { name: 'Band Form', atlas_key: 'band' },
-      { name: 'Metamyelocyte', atlas_key: 'metamyelocyte' },
-      { name: 'Atypical', atlas_key: 'myeloblast' }, // Placeholder
-      { name: 'nRBC', atlas_key: 'erythroid' },
-    ]
-
     return {
       targetCount: 100,
       isDecreaseMode: false,
       nRbcType: cellTypes.find((c) => c.name === 'nRBC')!,
       wbcTypes: cellTypes.filter((c) => c.name !== 'nRBC'),
       atlas: atlasData,
+      granulocyteSound: null as HTMLAudioElement | null,
+      agranulocyteSound: null as HTMLAudioElement | null,
     }
+  },
+  mounted() {
+    this.granulocyteSound = new Audio('sounds/granulocyte.wav')
+    this.agranulocyteSound = new Audio('sounds/agranulocyte.wav')
   },
   computed: {
     totalCount(): number {
@@ -122,21 +133,50 @@ export default defineComponent({
       const resetData = Object.fromEntries(Object.keys(this.dlcData).map((key) => [key, 0]))
       this.$emit('update:dlcData', resetData)
     },
-    handleCellClick(cell: string) {
-      const currentCount = this.dlcData[cell] || 0
+    handleCellClick(cellName: string) {
+      const currentCount = this.dlcData[cellName] || 0
       let newCount = currentCount
 
       if (this.isDecreaseMode) {
         if (currentCount > 0) {
           newCount = currentCount - 1
         }
-      } else {
-        if (cell === 'nRBC' || this.totalCount < this.targetCount) {
-          newCount = currentCount + 1
-        }
+      } else if (cellName === 'nRBC' || this.totalCount < this.targetCount) {
+        newCount = currentCount + 1
       }
 
-      this.$emit('update:dlcData', { ...this.dlcData, [cell]: newCount })
+      if (newCount !== currentCount) {
+        this.$emit('update:dlcData', { ...this.dlcData, [cellName]: newCount })
+
+        if (!this.isDecreaseMode) {
+          const cellInfo = this.getCellInfo(cellName)
+          if (!cellInfo) return
+
+          this.playSound(cellInfo)
+          this.vibrate(cellInfo)
+        }
+      }
+    },
+    getCellInfo(cellName: string) {
+      return cellTypes.find((c) => c.name === cellName)
+    },
+    playSound(cellInfo: CellType) {
+      if (cellInfo.name === 'nRBC') return
+
+      const sound = cellInfo.granulocyte ? this.granulocyteSound : this.agranulocyteSound
+      if (sound) {
+        sound.currentTime = 0
+        sound.play()
+      }
+    },
+    vibrate(cellInfo: CellType) {
+      if ('vibrate' in navigator) {
+        if (this.totalCount === this.targetCount) {
+          navigator.vibrate([100, 50, 100, 50, 200])
+        } else if (cellInfo.vibrate_pattern) {
+          navigator.vibrate(cellInfo.vibrate_pattern)
+        }
+      }
     },
     getIconStyle(atlasKey: string) {
       const frame = this.atlas.frames[atlasKey as keyof typeof this.atlas.frames]
