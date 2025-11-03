@@ -86,4 +86,6 @@ export class PaletteData {
 export interface CellType {
   name: string
   atlas_key: string
+  granulocyte: boolean
+  vibrate_pattern: Array<number>
 }
