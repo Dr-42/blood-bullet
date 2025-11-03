@@ -6,6 +6,7 @@
         v-for="(property, index) in rbcProperties"
         :key="property"
         class="morphology-item"
+        :class="{ 'full-width-item': property === 'Additional Notes' }"
         :style="{ borderLeftColor: getBorderColor(index) }"
       >
         <div class="property-name">{{ property }}</div>
@@ -80,7 +81,7 @@ export default defineComponent({
 
 .morphology-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
@@ -90,6 +91,10 @@ export default defineComponent({
   padding: 1rem;
   border-left: 5px solid;
   transition: transform 0.2s ease;
+}
+
+.full-width-item {
+  grid-column: span 2;
 }
 
 .morphology-item:hover {
