@@ -2,13 +2,8 @@
   <div class="coulter-section-box">
     <div v-if="ocrLoading" class="loading-overlay">
       <div class="loading-spinner"></div>
-      <div>Processing Image...</div>
+      <div>Processing...</div>
     </div>
-    <ocr-result-modal
-      v-if="showOcrModal"
-      :ocrText="ocrResult"
-      @close="showOcrModal = false"
-    />
     <div class="coulter-section-label">Coulter Results</div>
     <button class="scan-button" @click="openFilePicker">Scan Report</button>
     <input
@@ -41,13 +36,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Tesseract from 'tesseract.js'
-import OcrResultModal from '../modals/OcrResultModal.vue'
 
 export default defineComponent({
   name: 'CoulterView',
-  components: {
-    OcrResultModal,
-  },
   props: {
     coulterData: {
       type: Object as () => Record<string, string>,
@@ -58,8 +49,6 @@ export default defineComponent({
   data() {
     return {
       ocrLoading: false,
-      ocrResult: '',
-      showOcrModal: false,
       coulterProperties: [
         'WBC',
         'Neu#',
@@ -129,22 +118,106 @@ export default defineComponent({
       if (input.files && input.files[0]) {
         const file = input.files[0]
         this.ocrLoading = true
-        this.ocrResult = 'Processing...'
 
         Tesseract.recognize(file, 'eng', {
           logger: (m) => console.log(m),
         })
           .then(({ data: { text } }) => {
-            this.ocrLoading = false
-            this.ocrResult = text
-            this.showOcrModal = true
+            this.callGeminiApi(text)
           })
           .catch((err) => {
             this.ocrLoading = false
-            this.ocrResult = `Error: ${err.message}`
             console.error(err)
-            this.showOcrModal = true // Show error in modal as well
+            alert('OCR failed. Please try again.')
           })
+      }
+    },
+    async callGeminiApi(ocrText: string) {
+      const apiKey = localStorage.getItem('geminiApiKey')
+      if (!apiKey) {
+        alert('Gemini API Key not found. Please set it in the settings.')
+        this.ocrLoading = false
+        return
+      }
+
+      const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${apiKey}`
+
+      const prompt = `
+        Given the following text from a Coulter report, parse it and extract the values for the hematology parameters.
+        The output should be a valid JSON object. The keys of the JSON should be the parameter names and fit the following data structure:
+        {
+          "WBC": "",
+          "Neu#": "",
+          "Lym#": "",
+          "Mon#": "",
+          "Eos#": "",
+          "Bas#": "",
+          "Neu%": "",
+          "Lym%": "",
+          "Mon%": "",
+          "Eos%": "",
+          "Bas%": "",
+          "RBC": "",
+          "HGB": "",
+          "HCT": "",
+          "MCV": "",
+          "MCH": "",
+          "MCHC": "",
+          "RDW-CV": "",
+          "RDW-SD": "",
+          "PLT": "",
+          "MPV": "",
+          "PDW": "",
+          "PCT": "",
+          "P-LCC": "",
+          "P-LCR": "",
+          "RET#": "",
+          "RET%": "",
+          "IRF": "",
+          "LFR": "",
+          "MFR": "",
+          "HFR": "",
+          "IMG#": "",
+          "IMG%": "",
+          "IPF": "",
+          "RHE": ""
+        }
+        The values should be the numeric values as strings.
+        If a value is not found for a parameter, the value should be -1. Give special emphasis on decimals and percentages. The accuracy of the values is critical.
+        Here is the text:
+        ---
+        ${ocrText}
+        ---
+      `
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`)
+        }
+
+        const responseData = await response.json()
+        const jsonString = responseData.candidates[0].content.parts[0].text
+          .replace(/\`\`\`json|\`\`\`/g, '')
+          .trim()
+        const parsedData = JSON.parse(jsonString)
+
+        const updatedCoulterData = { ...this.coulterData, ...parsedData }
+        this.$emit('update:coulterData', updatedCoulterData)
+      } catch (error) {
+        console.error('Error calling Gemini API:', error)
+        alert('Failed to parse the report using Gemini API. Please check the console for details.')
+      } finally {
+        this.ocrLoading = false
       }
     },
   },

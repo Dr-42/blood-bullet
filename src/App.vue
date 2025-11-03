@@ -36,6 +36,7 @@ import { PaletteData, Palette } from './types'
 
 type SettingsData = {
   username: string
+  geminiApiKey: string
 }
 
 declare global {
@@ -112,6 +113,9 @@ export default {
     },
     async handleSaveSetting(data: SettingsData) {
       try {
+        if (data.geminiApiKey) {
+          localStorage.setItem('geminiApiKey', data.geminiApiKey);
+        }
         location.reload()
       } catch (e) {
         console.error(e)

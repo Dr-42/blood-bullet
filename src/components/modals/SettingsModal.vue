@@ -40,6 +40,17 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="geminiApiKey">Gemini API Key</label>
+          <input
+            type="password"
+            id="geminiApiKey"
+            v-model="geminiApiKey"
+            placeholder="Enter your Gemini API Key"
+          />
+          <small>Get your free API key from Google AI Studio. Do not share this key.</small>
+        </div>
+
         <div class="modal-actions">
           <button type="button" class="cancel-btn" @click="closeModal">Cancel</button>
           <button type="submit" class="submit-btn" :disabled="!isFormValid">Save</button>
@@ -65,6 +76,7 @@ export default defineComponent({
       username: '',
       password: '',
       showPassword: false,
+      geminiApiKey: '',
     }
   },
   emits: ['close', 'savesettings'],
@@ -81,6 +93,7 @@ export default defineComponent({
       this.$emit('savesettings', {
         username: this.username,
         password: this.password,
+        geminiApiKey: this.geminiApiKey,
       })
     },
     adjustModalForKeyboard(event: FocusEvent) {
@@ -92,6 +105,7 @@ export default defineComponent({
     },
   },
   mounted() {
+    this.geminiApiKey = localStorage.getItem('geminiApiKey') || ''
     const inputs = this.$el.querySelectorAll('input')
     inputs.forEach((input: HTMLInputElement) => {
       input.addEventListener('focus', this.adjustModalForKeyboard)
