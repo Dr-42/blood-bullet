@@ -12,6 +12,9 @@
         <li @click="closeMenu">
           <router-link to="/special-studies"> <file-document-icon class="aside-icon" /> Special Studies </router-link>
         </li>
+        <li @click="closeMenu">
+          <router-link to="/previous-cases"> <folder-open-icon class="aside-icon" /> Previous Cases </router-link>
+        </li>
       </ul>
     </div>
     <ul class="footer-links">
@@ -37,6 +40,7 @@ import HomeIcon from 'vue-material-design-icons/Home.vue'
 import InfoIcon from 'vue-material-design-icons/Information.vue'
 import LicenseIcon from 'vue-material-design-icons/Certificate.vue'
 import FileDocumentIcon from 'vue-material-design-icons/FileDocument.vue'
+import FolderOpenIcon from 'vue-material-design-icons/FolderOpen.vue'
 
 import InfoModal from '../modals/InfoModal.vue'
 
@@ -54,6 +58,7 @@ export default {
     InfoIcon,
     LicenseIcon,
     FileDocumentIcon,
+    FolderOpenIcon,
   },
   props: {
     isOpen: {

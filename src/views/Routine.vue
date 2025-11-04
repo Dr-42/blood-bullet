@@ -29,6 +29,8 @@ import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
 import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
 import ConclusionView from '../components/subviews/Conclusion.vue'
 
+import { saveCase } from '../lib/storage'
+
 export default {
   name: 'Routine',
   components: {
@@ -39,6 +41,12 @@ export default {
     LoadingSpinner,
     ContentSaveAllIcon,
     ConclusionView,
+  },
+  props: {
+    caseData: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
@@ -98,10 +106,37 @@ export default {
       },
     }
   },
+  beforeMount() {
+    if (this.caseData) {
+      const caseData = JSON.parse(this.caseData)
+      this.labDetails = caseData.labDetails
+      this.coulterData = caseData.coulterData
+      this.peripheralSmearData = caseData.peripheralSmearData
+      this.conclusion = caseData.conclusion
+      this.dlcData = caseData.dlcData
+    }
+  },
   methods: {
     saveCase() {
-      // Implement save case functionality here
-      console.log('Save Case button clicked')
+      const caseData = {
+        caseId: this.labDetails.caseId,
+        date: this.labDetails.date,
+        patientDetails: null,
+        labDetails: this.labDetails,
+        clinicalDetails: null,
+        coulterData: this.coulterData,
+        peripheralSmearData: this.peripheralSmearData,
+        dlcData: this.dlcData,
+        ironStudies: null,
+        hplc: null,
+        lapScore: null,
+        specialStains: null,
+        additionalTests: null,
+        previousInvestigations: [],
+        conclusion: this.conclusion,
+      }
+      saveCase(caseData)
+      alert('Case saved successfully!')
     },
   },
 }

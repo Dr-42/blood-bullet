@@ -8,7 +8,7 @@
     />
     <error-display v-if="error" :errorText="errorText" />
     <div class="overlay" v-if="asideOpen" @click="closeAside"></div>
-    <aside-menu :isOpen="asideOpen" @closeAside="closeAside" />
+    <aside-menu :isOpen="asideOpen" @closeAside="closeAside" @case-selected="handleCaseSelected" />
     <div class="content">
       <router-view />
     </div>
@@ -134,6 +134,12 @@ export default {
       localStorage.setItem('activePaletteIdx', paletteData.idx.toString())
       localStorage.setItem('palette_' + paletteData.idx, JSON.stringify(paletteData.toJson()))
       this.currentModal = null
+    },
+
+    handleCaseSelected(caseData: any) {
+      const hasSpecialStudies = caseData.ironStudies || caseData.hplc || caseData.lapScore || caseData.specialStains
+      const route = hasSpecialStudies ? '/special-studies' : '/routine'
+      this.$router.push({ name: route.substring(1), params: { caseData: JSON.stringify(caseData) } })
     },
 
     checkPaletteInitialized() {

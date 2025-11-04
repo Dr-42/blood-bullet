@@ -17,9 +17,8 @@
       <div class="total-display">Total: {{ totalCount }} / {{ targetCount }}</div>
     </div>
 
-    <div class="nrbc-section">
-      <div class="dlc-cell nrbc-cell" @touchend="handleCellClick(nRbcType.name)">
-        <div class="cell-icon" :style="getIconStyle(nRbcType.atlas_key)"></div>
+          <div class="nrbc-section">
+            <div class="dlc-cell nrbc-cell" @pointerdown="handleCellClick(nRbcType.name)">        <div class="cell-icon" :style="getIconStyle(nRbcType.atlas_key)"></div>
         <div class="cell-name">{{ nRbcType.name }}</div>
         <div class="cell-count">{{ dlcData[nRbcType.name] || 0 }}</div>
       </div>

@@ -70,6 +70,7 @@ import SpecialStainsView from '../components/subviews/SpecialStains.vue'
 import AdditionalTestsView from '../components/subviews/AdditionalTests.vue'
 import ConclusionView from '../components/subviews/Conclusion.vue'
 import type { PatientDetails, PreviousInvestigation } from '../types'
+import { saveCase } from '../lib/storage'
 
 export default {
   name: 'SpecialStudies',
@@ -88,7 +89,12 @@ export default {
     LAPScoreView,
     SpecialStainsView,
     AdditionalTestsView,
-    ConclusionView,
+  },
+  props: {
+    caseData: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
@@ -208,10 +214,45 @@ export default {
       },
     }
   },
+  beforeMount() {
+    if (this.caseData) {
+      const caseData = JSON.parse(this.caseData)
+      this.patientDetails = caseData.patientDetails
+      this.labDetails = caseData.labDetails
+      this.clinicalDetails = caseData.clinicalDetails
+      this.previousInvestigations = caseData.previousInvestigations
+      this.ironStudies = caseData.ironStudies
+      this.hplc = caseData.hplc
+      this.lapScore = caseData.lapScore
+      this.specialStains = caseData.specialStains
+      this.additionalTests = caseData.additionalTests
+      this.conclusion = caseData.conclusion
+      this.peripheralSmearData = caseData.peripheralSmearData
+      this.dlcData = caseData.dlcData
+      this.coulterData = caseData.coulterData
+    }
+  },
   methods: {
     saveCase() {
-      // Implement save case functionality here
-      console.log('Save Case button clicked')
+      const caseData = {
+        caseId: this.labDetails.caseId,
+        date: this.labDetails.date,
+        patientDetails: this.patientDetails,
+        labDetails: this.labDetails,
+        clinicalDetails: this.clinicalDetails,
+        coulterData: this.coulterData,
+        peripheralSmearData: this.peripheralSmearData,
+        dlcData: this.dlcData,
+        ironStudies: this.ironStudies,
+        hplc: this.hplc,
+        lapScore: this.lapScore,
+        specialStains: this.specialStains,
+        additionalTests: this.additionalTests,
+        previousInvestigations: this.previousInvestigations,
+        conclusion: this.conclusion,
+      }
+      saveCase(caseData)
+      alert('Case saved successfully!')
     },
     addInvestigation() {
       this.previousInvestigations.push({
