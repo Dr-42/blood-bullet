@@ -22,14 +22,31 @@
         />
       </div>
     </div>
+    <button class="manual-count-btn" @click="openManualCountModal">Manual Count</button>
+    <div v-if="manualCount > 0" class="manual-count-display">
+      <div class="property-name">Manual Count:</div>
+      <div class="count-value">{{ manualCount }}</div>
+      <button class="btn-recount" @click="openManualCountModal('recount')">Recount</button>
+      <button class="btn-replace" @click="openManualCountModal('replace')">Replace</button>
+    </div>
+    <manual-count-modal
+      v-if="showManualCountModal"
+      :defaultFactor="15000"
+      @close="showManualCountModal = false"
+      @save="saveManualCount"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import ManualCountModal from '../../components/modals/ManualCountModal.vue'
 
 export default defineComponent({
   name: 'PlateletMorphologyView',
+  components: {
+    ManualCountModal,
+  },
   props: {
     plateletMorphology: {
       type: Object as () => Record<string, string>,
@@ -41,11 +58,34 @@ export default defineComponent({
     return {
       plateletProperties: ['Notes'],
       paletteColors: ['--accent', '--accent2', '--accent-hover', '--disabled-color'],
+      showManualCountModal: false,
+      manualCount: 0,
+      manualCountMode: 'initial',
     }
   },
   methods: {
     getBorderColor(index: number) {
       return `var(${this.paletteColors[index % this.paletteColors.length]})`
+    },
+    openManualCountModal(mode: string = 'initial') {
+      this.manualCountMode = mode
+      this.showManualCountModal = true
+    },
+    saveManualCount(count: number) {
+      if (this.manualCountMode === 'recount') {
+        const newNotes = `${this.plateletMorphology.Notes}\nRecount: ${count}`
+        this.$emit('update:plateletMorphology', {
+          ...this.plateletMorphology,
+          Notes: newNotes,
+        })
+      } else {
+        this.manualCount = count
+        this.$emit('update:plateletMorphology', {
+          ...this.plateletMorphology,
+          'Manual Count': count.toString(),
+        })
+      }
+      this.showManualCountModal = false
     },
   },
 })
@@ -112,5 +152,47 @@ export default defineComponent({
 .morphology-input:focus {
   outline: none;
   border-color: var(--accent-hover);
+}
+
+.manual-count-btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.manual-count-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.manual-count-display {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.count-value {
+  font-weight: bold;
+}
+
+.btn-recount, .btn-replace {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-recount {
+  background-color: var(--accent2);
+  color: white;
+}
+
+.btn-replace {
+  background-color: var(--accent);
+  color: white;
 }
 </style>
