@@ -93,21 +93,7 @@ export default defineComponent({
       return `var(${this.paletteColors[index % this.paletteColors.length]})`
     },
     formatAndEmit(property: string, value: string) {
-      let formattedValue: string = value.trim()
-
-      if (formattedValue === '') {
-        this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue })
-        return
-      }
-
-      const num = parseFloat(formattedValue)
-      if (!isNaN(num)) {
-        formattedValue = num
-      } else {
-        formattedValue = this.coulterData[property] || ''
-      }
-
-      this.$emit('update:coulterData', { ...this.coulterData, [property]: formattedValue })
+      this.$emit('update:coulterData', { ...this.coulterData, [property]: value })
     },
     openFilePicker() {
       ;(this.$refs.fileInput as HTMLInputElement).click()

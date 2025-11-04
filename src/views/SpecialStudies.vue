@@ -69,6 +69,7 @@ import LAPScoreView from '../components/subviews/LAPScore.vue'
 import SpecialStainsView from '../components/subviews/SpecialStains.vue'
 import AdditionalTestsView from '../components/subviews/AdditionalTests.vue'
 import ConclusionView from '../components/subviews/Conclusion.vue'
+import type { PatientDetails, PreviousInvestigation } from '../types'
 
 export default {
   name: 'SpecialStudies',
@@ -100,8 +101,8 @@ export default {
         gender: 'male',
         crNo: '',
         contactNo: '',
-        testsRequested: [],
-      },
+        testsRequested: [] as string[],
+      } as PatientDetails,
       labDetails: {
         caseId: '12345',
         date: new Date().toISOString().slice(0, 10),
@@ -132,7 +133,7 @@ export default {
         hepatomegaly: false,
         splenomegaly: false,
       },
-      previousInvestigations: [],
+      previousInvestigations: [] as PreviousInvestigation[],
       ironStudies: {
         fe: '',
         tibc: '',

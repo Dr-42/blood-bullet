@@ -89,3 +89,32 @@ export interface CellType {
   granulocyte: boolean
   vibrate_pattern: Array<number>
 }
+
+export interface PatientDetails {
+  name: string
+  age: number | null
+  gender: 'male' | 'female'
+  crNo: string
+  contactNo: string
+  testsRequested: string[]
+}
+
+export interface PreviousInvestigation {
+  date: string
+  hb: string
+  tlc: string
+  plt: string
+  rbc: string
+  mcv: string
+  mch: string
+  mchc: string
+  urea: string
+  creat: string
+  na: string
+  k: string
+  sgot: string
+  sgpt: string
+  alp: string
+  dBil: string
+  tBil: string
+}

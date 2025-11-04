@@ -68,16 +68,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-
-interface PatientDetails {
-  name: string
-  age: number | null
-  gender: 'male' | 'female'
-  crNo: string
-  contactNo: string
-  testsRequested: string[]
-}
+import { defineComponent, type PropType } from 'vue'
+import type { PatientDetails } from '../../types'
 
 export default defineComponent({
   name: 'PatientDetailsView',
