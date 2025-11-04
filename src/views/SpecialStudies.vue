@@ -89,6 +89,7 @@ export default {
     LAPScoreView,
     SpecialStainsView,
     AdditionalTestsView,
+    ConclusionView,
   },
   props: {
     caseData: {

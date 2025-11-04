@@ -1,45 +1,97 @@
 <template>
   <div class="home">
-    <error-display v-if="error" :errorText="errorText" />
-    <div id="loading" v-if="loading">
-      <loading-spinner />
+    <div class="header">
+      <h1 class="title">Welcome to Blood Bullet</h1>
+      <p class="subtitle">Your digital assistant for hematology case management</p>
     </div>
-    <div id="content" v-else>
-      <h1>Welcome to the Home Page</h1>
+
+    <div class="quick-actions">
+      <router-link to="/routine" class="action-button">
+        <file-document-plus-outline-icon class="icon" />
+        <span>New Routine Case</span>
+      </router-link>
+      <router-link to="/special-studies" class="action-button">
+        <file-star-outline-icon class="icon" />
+        <span>New Special Study</span>
+      </router-link>
+      <router-link to="/previous-cases" class="action-button">
+        <folder-open-outline-icon class="icon" />
+        <span>View Previous Cases</span>
+      </router-link>
     </div>
-    <!-- Floating Action Buttons -->
-    <div class="floating-buttons">
-      <button class="fab" @click="saveCase()" title="Save Case">
-        <content-save-all-icon />
-      </button>
+
+    <div class="main-content">
+      <div class="recent-cases">
+        <h2 class="section-title">Recent Cases</h2>
+        <ul v-if="recentCases.length">
+          <li v-for="caseItem in recentCases" :key="caseItem.caseId" @click="selectCase(caseItem)">
+            <div class="case-info">
+              <span class="case-name">{{ caseItem.patientDetails ? caseItem.patientDetails.name : caseItem.caseId }}</span>
+              <span class="case-date">{{ caseItem.date }}</span>
+            </div>
+            <chevron-right-icon class="arrow-icon" />
+          </li>
+        </ul>
+        <p v-else>No recent cases found.</p>
+      </div>
+
+      <div class="stats">
+        <h2 class="section-title">Statistics</h2>
+        <div class="stat-item">
+          <span class="stat-value">{{ totalCases }}</span>
+          <span class="stat-label">Total Cases</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ routineCasesCount }}</span>
+          <span class="stat-label">Routine Cases</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ specialCasesCount }}</span>
+          <span class="stat-label">Special Studies</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import ErrorDisplay from '../components/subviews/ErrorDisplay.vue'
-import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
-
-import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
+import FileDocumentPlusOutlineIcon from 'vue-material-design-icons/FileDocumentPlusOutline.vue'
+import FileStarOutlineIcon from 'vue-material-design-icons/FileStarOutline.vue'
+import FolderOpenOutlineIcon from 'vue-material-design-icons/FolderOpenOutline.vue'
+import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue'
+import { getAllCases } from '../lib/storage'
+import type { CaseData } from '../lib/storage'
 
 export default {
+  name: 'Home',
   components: {
-    ErrorDisplay,
-    LoadingSpinner,
-    ContentSaveAllIcon,
+    FileDocumentPlusOutlineIcon,
+    FileStarOutlineIcon,
+    FolderOpenOutlineIcon,
+    ChevronRightIcon,
   },
-
   data() {
     return {
-      loading: false,
-      error: false,
-      errorText: '',
+      recentCases: [] as CaseData[],
+      totalCases: 0,
+      routineCasesCount: 0,
+      specialCasesCount: 0,
     }
   },
+  mounted() {
+    this.loadDashboardData()
+  },
   methods: {
-    saveCase() {
-      // Implement save case functionality here
-      console.log('Save Case button clicked')
+    loadDashboardData() {
+      const allCases = getAllCases()
+      this.totalCases = allCases.length
+      this.routineCasesCount = allCases.filter((c) => !c.patientDetails).length
+      this.specialCasesCount = allCases.filter((c) => c.patientDetails).length
+      this.recentCases = allCases.slice(0, 5)
+    },
+    selectCase(caseData: CaseData) {
+      const routeName = caseData.patientDetails ? 'special-studies' : 'routine'
+      this.$router.push({ name: routeName, params: { caseData: JSON.stringify(caseData) } })
     },
   },
 }
@@ -47,96 +99,137 @@ export default {
 
 <style scoped>
 .home {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  padding: 2rem;
   background-color: var(--bg);
-  margin: 0;
-  height: calc(100vh - 50px);
-  color: var(--accent2);
-  padding: 0;
-}
-.floating-buttons {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  color: var(--text-color, #e2e2e2);
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  z-index: 15;
+  gap: 2rem;
 }
 
-.fab {
-  background-color: var(--accent);
-  color: white;
-  border: 2px solid var(--accent2);
-  border-radius: 25%;
-  width: 56px;
-  height: 56px;
+.header {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--accent2);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-color, #e2e2e2);
+}
+
+.quick-actions {
   display: flex;
   justify-content: center;
-  align-items: center;
-  box-shadow: 0px 4px 10px var(--bg-dark);
-  cursor: pointer;
-  outline: none;
+  gap: 1rem;
 }
 
-.fab:hover {
+.action-button {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--accent);
+  color: var(--text-color, #e2e2e2);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
   background-color: var(--accent-hover);
 }
 
-.fab svg {
-  width: 24px;
-  height: 24px;
+.action-button .icon {
+  font-size: 1.5rem;
 }
 
-/* Vertical orientation */
-@media (orientation: portrait) {
-  #content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: calc(100vh - 50px);
-  }
-
-  #loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - (50px + 10vh));
-    background-color: var(--bg);
-    z-index: 3;
-  }
+.main-content {
+  display: flex;
+  gap: 2rem;
 }
 
-/* Horizontal orientation */
-@media (orientation: landscape) {
-  #content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-  #loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - (50px + 10vh));
-    background-color: var(--bg);
-    z-index: 3;
-  }
+.recent-cases, .stats {
+  flex: 1;
+  background-color: var(--bg-dark);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent2);
+  margin-bottom: 1rem;
+}
+
+.recent-cases ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recent-cases li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--bg);
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.recent-cases li:hover {
+  background-color: var(--accent-hover);
+}
+
+.case-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-name {
+  font-weight: 600;
+}
+
+.case-date {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.arrow-icon {
+  font-size: 1.5rem;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bg);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--accent2);
+}
+
+.stat-label {
+  font-size: 1rem;
 }
 </style>
