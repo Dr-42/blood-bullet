@@ -22,12 +22,12 @@
         />
       </div>
     </div>
-    <button class="manual-count-btn" @click="openManualCountModal">Manual Count</button>
+    <button class="manual-count-btn" @click="() => openManualCountModal()">Manual Count</button>
     <div v-if="manualCount > 0" class="manual-count-display">
       <div class="property-name">Manual Count:</div>
       <div class="count-value">{{ manualCount }}</div>
-      <button class="btn-recount" @click="openManualCountModal('recount')">Recount</button>
-      <button class="btn-replace" @click="openManualCountModal('replace')">Replace</button>
+      <button class="btn-recount" @click="() => openManualCountModal('recount')">Recount</button>
+      <button class="btn-replace" @click="() => openManualCountModal('replace')">Replace</button>
     </div>
     <manual-count-modal
       v-if="showManualCountModal"
