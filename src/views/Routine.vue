@@ -9,6 +9,7 @@
       <lab-details-view v-model:labDetails="labDetails" />
       <coulter-view v-model:coulterData="coulterData" />
       <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
+      <conclusion-view v-model:conclusion="conclusion" />
     </div>
     <!-- Floating Action Buttons -->
     <div class="floating-buttons">
@@ -26,6 +27,7 @@ import PeripheralSmearView from '../components/subviews/PeripheralSmearView.vue'
 import ErrorDisplay from '../components/subviews/ErrorDisplay.vue'
 import LoadingSpinner from '../components/subviews/LoadingSpinner.vue'
 import ContentSaveAllIcon from 'vue-material-design-icons/ContentSaveAll.vue'
+import ConclusionView from '../components/subviews/Conclusion.vue'
 
 export default {
   name: 'Routine',
@@ -36,6 +38,7 @@ export default {
     ErrorDisplay,
     LoadingSpinner,
     ContentSaveAllIcon,
+    ConclusionView,
   },
   data() {
     return {
@@ -88,6 +91,10 @@ export default {
         'IMG%': '0.05',
         IPF: '0.02',
         RHE: '0.01',
+      },
+      conclusion: {
+        impression: '',
+        advice: '',
       },
     }
   },

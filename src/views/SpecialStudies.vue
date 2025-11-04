@@ -24,11 +24,22 @@
         <button class="add-btn" @click="addInvestigation">Add Investigation</button>
       </div>
       <coulter-view v-model:coulterData="coulterData" />
+      <additional-tests-view v-model:additionalTests="additionalTests" />
       <peripheral-smear-view v-model:peripheralSmearData="peripheralSmearData" />
-      <iron-studies-view v-if="patientDetails.testsRequested.includes('Iron Studies')" v-model:ironStudies="ironStudies" />
+      <iron-studies-view
+        v-if="patientDetails.testsRequested.includes('Iron Studies')"
+        v-model:ironStudies="ironStudies"
+      />
       <h-p-l-c-view v-if="patientDetails.testsRequested.includes('HPLC')" v-model:hplc="hplc" />
-      <l-a-p-score-view v-if="patientDetails.testsRequested.includes('LAP Score')" v-model:lapScore="lapScore" />
-      <special-stains-view v-if="patientDetails.testsRequested.includes('Special Stains')" v-model:specialStains="specialStains" />
+      <l-a-p-score-view
+        v-if="patientDetails.testsRequested.includes('LAP Score')"
+        v-model:lapScore="lapScore"
+      />
+      <special-stains-view
+        v-if="patientDetails.testsRequested.includes('Special Stains')"
+        v-model:specialStains="specialStains"
+      />
+      <conclusion-view v-model:conclusion="conclusion" />
     </div>
     <!-- Floating Action Buttons -->
     <div class="floating-buttons">
@@ -56,6 +67,8 @@ import IronStudiesView from '../components/subviews/IronStudies.vue'
 import HPLCView from '../components/subviews/HPLC.vue'
 import LAPScoreView from '../components/subviews/LAPScore.vue'
 import SpecialStainsView from '../components/subviews/SpecialStains.vue'
+import AdditionalTestsView from '../components/subviews/AdditionalTests.vue'
+import ConclusionView from '../components/subviews/Conclusion.vue'
 
 export default {
   name: 'SpecialStudies',
@@ -73,6 +86,8 @@ export default {
     HPLCView,
     LAPScoreView,
     SpecialStainsView,
+    AdditionalTestsView,
+    ConclusionView,
   },
   data() {
     return {
@@ -137,6 +152,15 @@ export default {
         sbb: '',
         pas: '',
         others: [],
+      },
+      additionalTests: {
+        g6pd: 'Normal',
+        esr: '',
+        reticPercent: '',
+      },
+      conclusion: {
+        impression: '',
+        advice: '',
       },
       peripheralSmearData: {
         rbc: {},
