@@ -1,9 +1,9 @@
-import type { PatientDetails, PreviousInvestigation } from './types'
+import type { PatientDetails, PreviousInvestigation } from '../types'
 
 export interface CaseData {
   caseId: string
   date: string
-  patientDetails: PatientDetails
+  patientDetails: PatientDetails | null
   labDetails: any
   clinicalDetails: any
   coulterData: any

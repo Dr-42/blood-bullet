@@ -14,7 +14,7 @@
         <h2>Special Studies</h2>
         <ul>
           <li v-for="caseItem in specialCases" :key="caseItem.caseId" @click="selectCase(caseItem)">
-            <a>{{ caseItem.patientDetails.name }} - {{ caseItem.date }}</a>
+            <a v-if="caseItem.patientDetails">{{ caseItem.patientDetails.name }} - {{ caseItem.date }}</a>
           </li>
         </ul>
       </div>
