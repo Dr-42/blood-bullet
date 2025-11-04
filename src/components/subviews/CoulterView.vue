@@ -34,7 +34,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Tesseract from 'tesseract.js'
 
 export default defineComponent({
   name: 'CoulterView',
@@ -98,23 +97,20 @@ export default defineComponent({
     openFilePicker() {
       ;(this.$refs.fileInput as HTMLInputElement).click()
     },
-    handleImageUpload(event: Event) {
+    async handleImageUpload(event: Event) {
       const input = event.target as HTMLInputElement
       if (input.files && input.files[0]) {
         const file = input.files[0]
         this.ocrLoading = true
 
-        Tesseract.recognize(file, 'eng', {
-          logger: (m) => console.log(m),
-        })
-          .then(({ data: { text } }) => {
-            this.callGeminiApi(text)
-          })
-          .catch((err) => {
-            this.ocrLoading = false
-            console.error(err)
-            alert('OCR failed. Please try again.')
-          })
+        const { createWorker } = await import('tesseract.js')
+
+        const worker = await createWorker('eng', 1)
+        const {
+          data: { text },
+        } = await worker.recognize(file)
+        await worker.terminate()
+        this.callGeminiApi(text)
       }
     },
     async callGeminiApi(ocrText: string) {
