@@ -7,13 +7,24 @@
           <router-link to="/"> <home-icon class="aside-icon" /> Home </router-link>
         </li>
         <li @click="closeMenu">
-          <router-link to="/routine"> <file-document-icon class="aside-icon" /> Routine </router-link>
+          <router-link to="/routine">
+            <file-document-icon class="aside-icon" /> Routine
+          </router-link>
         </li>
         <li @click="closeMenu">
-          <router-link to="/special-studies"> <file-document-icon class="aside-icon" /> Special Studies </router-link>
+          <router-link to="/special-studies">
+            <file-document-icon class="aside-icon" /> Special Studies
+          </router-link>
         </li>
         <li @click="closeMenu">
-          <router-link to="/previous-cases"> <folder-open-icon class="aside-icon" /> Previous Cases </router-link>
+          <router-link to="/marrow-studies">
+            <file-document-icon class="aside-icon" /> Marrow Studies
+          </router-link>
+        </li>
+        <li @click="closeMenu">
+          <router-link to="/previous-cases">
+            <folder-open-icon class="aside-icon" /> Previous Cases
+          </router-link>
         </li>
       </ul>
     </div>
