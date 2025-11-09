@@ -1,5 +1,5 @@
 <template>
-  <div class="tools-container">
+  <div class="tools-view">
     <component :is="toolComponent" v-bind="toolProps" />
   </div>
 </template>
@@ -67,7 +67,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.tools-container {
-  padding: 20px;
+.tools-view {
+  padding: 2rem;
+  background-color: var(--bg);
+  color: var(--text-color, #e2e2e2);
+  height: 100%;
 }
 </style>
