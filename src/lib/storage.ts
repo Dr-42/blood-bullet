@@ -1,4 +1,4 @@
-import type { PatientDetails, PreviousInvestigation } from '../types'
+import type { Aspirate, PatientDetails, PreviousInvestigation } from '../types'
 
 export interface CaseData {
   caseId: string
@@ -16,6 +16,7 @@ export interface CaseData {
   additionalTests: any
   previousInvestigations: PreviousInvestigation[]
   conclusion: any
+  aspirate?: Aspirate
 }
 
 export const saveCase = (caseData: CaseData) => {
