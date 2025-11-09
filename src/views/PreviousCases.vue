@@ -18,6 +18,14 @@
           </li>
         </ul>
       </div>
+      <div class="case-list">
+        <h2>Marrow Studies</h2>
+        <ul>
+          <li v-for="caseItem in marrowCases" :key="caseItem.caseId" @click="selectCase(caseItem)">
+            <a v-if="caseItem.patientDetails">{{ caseItem.patientDetails.name }} - {{ caseItem.date }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -32,6 +40,7 @@ export default {
     return {
       routineCases: [] as CaseData[],
       specialCases: [] as CaseData[],
+      marrowCases: [] as CaseData[],
     }
   },
   mounted() {
@@ -41,10 +50,16 @@ export default {
     loadCases() {
       const allCases = getAllCases()
       this.routineCases = allCases.filter((c) => !c.patientDetails)
-      this.specialCases = allCases.filter((c) => c.patientDetails)
+      this.specialCases = allCases.filter((c) => c.patientDetails && !c.aspirate)
+      this.marrowCases = allCases.filter((c) => c.aspirate)
     },
     selectCase(caseData: CaseData) {
-      const routeName = caseData.patientDetails ? 'special-studies' : 'routine'
+      let routeName = 'routine'
+      if (caseData.aspirate) {
+        routeName = 'marrow-studies'
+      } else if (caseData.patientDetails) {
+        routeName = 'special-studies'
+      }
       this.$router.push({ name: routeName, params: { caseData: JSON.stringify(caseData) } })
     },
   },
