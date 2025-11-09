@@ -118,3 +118,15 @@ export interface PreviousInvestigation {
   dBil: string
   tBil: string
 }
+
+export interface Aspirate {
+  adequacy: 'Adequate' | 'Inadequate'
+  particulate: 'Particulate' | 'Diluted'
+  lineages: {
+    erythroid: string
+    myeloid: string
+    megakaryocytic: string
+  }
+  myelogram: Record<string, number>
+  additionalNotes: string
+}

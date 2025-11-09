@@ -14,6 +14,10 @@
         <file-star-outline-icon class="icon" />
         <span>New Special Study</span>
       </router-link>
+      <router-link to="/marrow-studies" class="action-button">
+        <file-chart-outline-icon class="icon" />
+        <span>New Marrow Study</span>
+      </router-link>
       <router-link to="/previous-cases" class="action-button">
         <folder-open-outline-icon class="icon" />
         <span>View Previous Cases</span>
@@ -49,6 +53,10 @@
           <span class="stat-value">{{ specialCasesCount }}</span>
           <span class="stat-label">Special Studies</span>
         </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ marrowCasesCount }}</span>
+          <span class="stat-label">Marrow Studies</span>
+        </div>
       </div>
     </div>
   </div>
@@ -57,6 +65,7 @@
 <script lang="ts">
 import FileDocumentPlusOutlineIcon from 'vue-material-design-icons/FileDocumentPlusOutline.vue'
 import FileStarOutlineIcon from 'vue-material-design-icons/FileStarOutline.vue'
+import FileChartOutlineIcon from 'vue-material-design-icons/FileChartOutline.vue'
 import FolderOpenOutlineIcon from 'vue-material-design-icons/FolderOpenOutline.vue'
 import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue'
 import { getAllCases } from '../lib/storage'
@@ -67,6 +76,7 @@ export default {
   components: {
     FileDocumentPlusOutlineIcon,
     FileStarOutlineIcon,
+    FileChartOutlineIcon,
     FolderOpenOutlineIcon,
     ChevronRightIcon,
   },
@@ -76,6 +86,7 @@ export default {
       totalCases: 0,
       routineCasesCount: 0,
       specialCasesCount: 0,
+      marrowCasesCount: 0,
     }
   },
   mounted() {
@@ -86,11 +97,18 @@ export default {
       const allCases = getAllCases()
       this.totalCases = allCases.length
       this.routineCasesCount = allCases.filter((c) => !c.patientDetails).length
-      this.specialCasesCount = allCases.filter((c) => c.patientDetails).length
+      this.specialCasesCount = allCases.filter((c) => c.patientDetails && !c.aspirate).length
+      this.marrowCasesCount = allCases.filter((c) => c.aspirate).length
       this.recentCases = allCases.slice(0, 5)
     },
-    selectCase(caseData: CaseData) {
-      const routeName = caseData.patientDetails ? 'special-studies' : 'routine'
+    selectCase(caseData?: CaseData) {
+      if (!caseData) return
+      let routeName = 'routine'
+      if (caseData.aspirate) {
+        routeName = 'marrow-studies'
+      } else if (caseData.patientDetails) {
+        routeName = 'special-studies'
+      }
       this.$router.push({ name: routeName, params: { caseData: JSON.stringify(caseData) } })
     },
   },

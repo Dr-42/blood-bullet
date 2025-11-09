@@ -68,9 +68,10 @@ import IronStudiesView from '../components/subviews/IronStudies.vue'
 import HPLCView from '../components/subviews/HPLC.vue'
 import LAPScoreView from '../components/subviews/LAPScore.vue'
 import SpecialStainsView from '../components/subviews/SpecialStains.vue'
+import AspirateView from '../components/subviews/AspirateView.vue'
 import AdditionalTestsView from '../components/subviews/AdditionalTests.vue'
 import ConclusionView from '../components/subviews/Conclusion.vue'
-import type { PatientDetails, PreviousInvestigation } from '../types'
+import type { PatientDetails, PreviousInvestigation, Aspirate } from '../types'
 import { saveCase } from '../lib/storage'
 
 export default {
@@ -89,6 +90,7 @@ export default {
     HPLCView,
     LAPScoreView,
     SpecialStainsView,
+    AspirateView,
     AdditionalTestsView,
     ConclusionView,
   },
@@ -162,6 +164,17 @@ export default {
         pas: '',
         others: [],
       },
+      aspirate: {
+        adequacy: 'Adequate',
+        particulate: 'Particulate',
+        lineages: {
+          erythroid: '',
+          myeloid: '',
+          megakaryocytic: '',
+        },
+        myelogram: {},
+        additionalNotes: '',
+      } as Aspirate,
       additionalTests: {
         g6pd: 'Normal',
         esr: '',
@@ -225,11 +238,12 @@ export default {
       this.previousInvestigations = caseData.previousInvestigations
       this.ironStudies = caseData.ironStudies
       this.hplc = caseData.hplc
-      this.lapScore = caseData.lapScore
-      this.specialStains = caseData.specialStains
-      this.additionalTests = caseData.additionalTests
-      this.conclusion = caseData.conclusion
-      this.peripheralSmearData = caseData.peripheralSmearData
+      this.lapScore = caseData.lapScore ?? this.lapScore
+      this.specialStains = caseData.specialStains ?? this.specialStains
+      this.aspirate = caseData.aspirate ?? this.aspirate
+      this.additionalTests = caseData.additionalTests ?? this.additionalTests
+      this.conclusion = caseData.conclusion ?? this.conclusion
+      this.peripheralSmearData = caseData.peripheralSmearData ?? this.peripheralSmearData
       this.dlcData = caseData.dlcData
       this.coulterData = caseData.coulterData
     }
@@ -249,6 +263,7 @@ export default {
         hplc: this.hplc,
         lapScore: this.lapScore,
         specialStains: this.specialStains,
+        aspirate: this.aspirate,
         additionalTests: this.additionalTests,
         previousInvestigations: this.previousInvestigations,
         conclusion: this.conclusion,

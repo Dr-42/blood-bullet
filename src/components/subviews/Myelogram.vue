@@ -35,8 +35,14 @@
     </div>
 
     <div v-if="totalCount === targetCount" class="myelogram-summary">
-      <div class="summary-label">myelogram Summary:</div>
-      <div class="summary-string" v-html="myelogramString"></div>
+      <div class="summary-item">
+        <div class="summary-label">M:E Ratio:</div>
+        <div class="summary-value">{{ meRatio }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Differential Count:</div>
+        <div class="summary-string" v-html="differentialString"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -128,7 +134,7 @@ const cellTypes: CellType[] = [
 ]
 
 export default defineComponent({
-  name: 'myelogramCounter',
+  name: 'Myelogram',
   props: {
     myelogramData: {
       type: Object as () => Record<string, number>,
@@ -157,33 +163,65 @@ export default defineComponent({
         .filter(([key]) => key !== 'nRBC')
         .reduce((sum, [, count]) => sum + count, 0)
     },
-    myelogramString(): string {
+    myeloidSeries(): string[] {
+      return [
+        'Myeloblast',
+        'Promyelocyte',
+        'Myelocyte',
+        'Metamyelocyte',
+        'Band Form',
+        'Neutrophil',
+        'Eosinophil',
+        'Basophil',
+      ]
+    },
+    erythroidSeries(): string[] {
+      return ['Erythroid']
+    },
+    myeloidCount(): number {
+      return this.myeloidSeries.reduce((sum, cell) => sum + (this.myelogramData[cell] || 0), 0)
+    },
+    erythroidCount(): number {
+      return this.erythroidSeries.reduce((sum, cell) => sum + (this.myelogramData[cell] || 0), 0)
+    },
+    meRatio(): string {
+      if (this.erythroidCount > 0) {
+        return (this.myeloidCount / this.erythroidCount).toFixed(2)
+      }
+      return 'N/A'
+    },
+    differentialString(): string {
       if (this.totalCount !== this.targetCount) return ''
 
       const normalized = this.getNormalizedCounts()
       const nrbcCount = this.myelogramData.nRBC || 0
 
       const parts = {
+        Ery: normalized.Erythroid || 0,
+        Blast: normalized.Myeloblast || 0,
+        Pro: normalized.Promyelocyte || 0,
+        Myelo: normalized.Myelocyte || 0,
+        MetaMyelo: normalized.Metamyelocyte || 0,
+        Band: normalized['Band Form'] || 0,
         N: normalized.Neutrophil || 0,
         L: normalized.Lymphocyte || 0,
         M: normalized.Monocyte || 0,
         E: normalized.Eosinophil || 0,
         B: normalized.Basophil || 0,
-        Band: normalized['Band Form'] || 0,
-        Meta: normalized.Metamyelocyte || 0,
-        Aty: normalized.Atypical || 0,
+        Plasma: normalized['Plasma Cell'] || 0,
+        Atypical: normalized.Atypical || 0,
       }
 
-      let myelogramStr = Object.entries(parts)
+      let diffStr = Object.entries(parts)
         .filter(([, count]) => count > 0)
         .map(([key, count]) => `${key}<sub>${count}</sub>`)
         .join('')
 
       if (nrbcCount > 0) {
-        myelogramStr += ` nRBCs ${nrbcCount}/${this.targetCount} WBCs`
+        diffStr += ` nRBCs ${nrbcCount}/${this.targetCount} WBCs`
       }
 
-      return myelogramStr
+      return diffStr
     },
   },
   methods: {
@@ -414,12 +452,25 @@ export default defineComponent({
   background-color: var(--bg);
   border-radius: 8px;
   border: 1px solid var(--accent);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.summary-item {
+  text-align: center;
 }
 
 .summary-label {
   font-weight: 600;
   color: var(--accent2);
   margin-bottom: 0.5rem;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent2);
 }
 
 .summary-string {
