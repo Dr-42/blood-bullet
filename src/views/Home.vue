@@ -32,6 +32,7 @@
             <div class="case-info">
               <span class="case-name">{{ caseItem.patientDetails ? caseItem.patientDetails.name : caseItem.caseId }}</span>
               <span class="case-date">{{ caseItem.date }}</span>
+              <span class="case-type">{{ getCaseType(caseItem) }}</span>
             </div>
             <chevron-right-icon class="arrow-icon" />
           </li>
@@ -110,6 +111,15 @@ export default {
         routeName = 'special-studies'
       }
       this.$router.push({ name: routeName, params: { caseData: JSON.stringify(caseData) } })
+    },
+    getCaseType(caseData: CaseData): string {
+      if (caseData.aspirate) {
+        return 'Marrow Study'
+      } else if (caseData.patientDetails) {
+        return 'Special Study'
+      } else {
+        return 'Routine'
+      }
     },
   },
 }
@@ -220,6 +230,12 @@ export default {
 .case-date {
   font-size: 0.9rem;
   color: #aaa;
+}
+
+.case-type {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-top: 0.25rem;
 }
 
 .arrow-icon {
