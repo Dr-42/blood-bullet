@@ -4,6 +4,7 @@ import Routine from '../views/Routine.vue'
 import SpecialStudies from '../views/SpecialStudies.vue'
 import MarrowStudies from '../views/MarrowStudies.vue'
 import PreviousCases from '../views/PreviousCases.vue'
+import Tools from '../views/Tools.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -21,6 +22,7 @@ const routes = [
     props: true,
   },
   { path: '/previous-cases', name: 'PreviousCases', component: PreviousCases },
+  { path: '/tools/:toolName', name: 'tools', component: Tools },
 ]
 
 const router = createRouter({

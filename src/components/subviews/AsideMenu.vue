@@ -28,6 +28,23 @@
         </li>
       </ul>
     </div>
+    <div>
+      <div class="title">Tools</div>
+      <ul class="nav-links">
+        <li @click="closeMenu">
+          <router-link to="/tools/dlc"> <file-document-icon class="aside-icon" /> DLC </router-link>
+        </li>
+        <li @click="closeMenu">
+          <router-link to="/tools/myelogram"> <file-document-icon class="aside-icon" /> Myelogram </router-link>
+        </li>
+        <li @click="closeMenu">
+          <router-link to="/tools/manual-wbc-count"> <file-document-icon class="aside-icon" /> Manual WBC Count </router-link>
+        </li>
+        <li @click="closeMenu">
+          <router-link to="/tools/manual-platelet-count"> <file-document-icon class="aside-icon" /> Manual Platelet Count </router-link>
+        </li>
+      </ul>
+    </div>
     <ul class="footer-links">
       <li @click="openModal('about')">
         <a href="javascript:void(0)"> <info-icon class="aside-icon" /> About </a>
